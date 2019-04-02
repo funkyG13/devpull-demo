@@ -66,7 +66,7 @@ public class UserDaoImpl implements UserDao {
 		
 		Session session = em.unwrap(Session.class);
 		
-		Query query = session.createQuery("delete from User where id:=userId");
+		Query query = session.createQuery("delete from User where id=:userId");
 		
 		query.setParameter("userId", id);
 		
