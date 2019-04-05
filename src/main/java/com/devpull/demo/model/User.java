@@ -40,7 +40,7 @@ public class User {
     @Column(name="job_description")
     private String jobDescr;   
 //    
-//    @OneToOne
+//    @OneToMany
 //    @JoinColumn(name="user_role_id")
 //    private User role;
 // 

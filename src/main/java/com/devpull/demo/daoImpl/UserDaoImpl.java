@@ -1,6 +1,6 @@
 package com.devpull.demo.daoImpl;
 
-import java.util.Currency;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.devpull.demo.dao.UserDao;
 import com.devpull.demo.model.User;
@@ -58,7 +57,7 @@ public class UserDaoImpl implements UserDao {
 
 		Session session = em.unwrap(Session.class);
 		
-		session.saveOrUpdate(user);
+		session.save(user);
 	}
 
 	@Override
@@ -72,6 +71,32 @@ public class UserDaoImpl implements UserDao {
 		
 		query.executeUpdate();
 		
+	}
+
+	@Override
+	public boolean userExists(User user) {
+		
+		return getUserByUsername(user.getUsername()) != null;
+	}
+
+	@Override
+	public User getUserByUsername(String username) {
+		
+		List<User> users = findAll();
+		for(User user: users) {
+			if(user.getUsername().equals(username)) {
+				return user;
+			}	
+		}
+		return null;
+	}
+
+	@Override
+	public void update(User user) {
+		
+		Session session = em.unwrap(Session.class);
+		
+		session.update(user);
 	}
 
 	

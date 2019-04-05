@@ -45,4 +45,21 @@ public class AdminServiceImpl implements AdminService {
 		userDao.deleteUserById(id);
 	}
 
+	@Override
+	@Transactional
+	public boolean userExists(User user) {
+		
+		return userDao.userExists(user);
+	}
+
+	@Override
+	public User getUserByUsername(String username) {
+		return userDao.getUserByUsername(username);
+	}
+
+	@Override
+	public void update(User user) {
+		userDao.update(user);
+	}
+
 }

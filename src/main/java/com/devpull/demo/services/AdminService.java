@@ -6,8 +6,12 @@ import com.devpull.demo.model.User;
 
 public interface AdminService {
 
-	public List<User> findAll();
-	public User getUserById(int id);
-	public void saveUser(User user);
-	public void deleteUserById(int id);
+	 List<User> findAll();
+	 User getUserById(int id);
+	 void saveUser(User user);
+	 void update(User user);
+	 void deleteUserById(int id);
+	 User getUserByUsername(String username);
+
+	 boolean userExists(User user);
 }
