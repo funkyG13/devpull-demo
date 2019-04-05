@@ -3,9 +3,6 @@ package com.devpull.demo.controller;
 import java.util.List;
 
 
-import javax.management.RuntimeErrorException;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.devpull.demo.dao.UserDao;
+
 import com.devpull.demo.model.User;
 import com.devpull.demo.services.AdminService;
 import com.devpull.demo.util.CustomErrorType;
@@ -85,7 +82,7 @@ public class UserController {
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/users/{userId}", method = RequestMethod.PUT)
+	@PutMapping("/users/{userId}")
 	public ResponseEntity<User> updateUser(@PathVariable int userId,@RequestBody User user) {
 		
 		logger.info("Updating user with id {}", userId);
@@ -107,7 +104,7 @@ public class UserController {
 		currUser.setUserCv(user.getUserCv());
 		currUser.setJobDescr(user.getJobDescr());
 		
-		adminService.saveUser(user);
+		adminService.update(user);
 		
 		return new ResponseEntity<User>(currUser, HttpStatus.OK);
 	}

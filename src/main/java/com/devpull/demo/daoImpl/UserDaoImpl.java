@@ -96,9 +96,17 @@ public class UserDaoImpl implements UserDao {
 		
 		Session session = em.unwrap(Session.class);
 		
-		session.update(user);
+		session.merge(user);	
+		
+//		List<User> users = findAll();
+//		for(User us: users) {
+//			if(user.getId()== us.getId()) {
+//				int index = users.indexOf(us);
+//				users.set(index, user);
+//			}
+		}
 	}
 
 	
 
-}
+
