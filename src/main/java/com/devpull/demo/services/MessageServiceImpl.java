@@ -16,12 +16,6 @@ public class MessageServiceImpl implements MessageService {
 	@Autowired
 	private MessageDao msgDao;
 	
-	@Override
-	@Transactional
-	public List<Message> getMessageForChat(User user1, User user2) {
-	
-		return msgDao.getMessageForChat(user1, user2);
-	}
 
 	@Override
 	@Transactional
@@ -34,6 +28,18 @@ public class MessageServiceImpl implements MessageService {
 	@Transactional
 	public List<Message> getAllMsgs() {
 		return msgDao.getAllMsgs();
+	}
+
+	@Override
+	@Transactional
+	public List<Message> getMessagesFrom(int receiverId) {
+		return msgDao.getMessagesFrom(receiverId);
+	}
+
+	@Override
+	@Transactional
+	public void sendMsgTo(Message msg, int receiverId) {
+			msgDao.sendMsgTo(msg, receiverId);		
 	}
 
 }

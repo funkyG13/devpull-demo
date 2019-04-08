@@ -17,19 +17,15 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @ComponentScan(basePackages= "com.devpull.demo")
 @PropertySource("classpath:application.properties")
-public class MyConfig {
+public class MyConfig {	
 	
-//	@Autowired
-//	private Environment env;
-//	
-//	
-//	
+	
 //	@Bean
 //	public DataSource dataSource() {
-//		
+//		DataSource ds = new Data 
 //		
 //	}
-//	
+	
 	
 	@Bean
 	public ViewResolver viewResolver() {

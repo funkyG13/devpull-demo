@@ -10,9 +10,12 @@ import com.devpull.demo.model.User;
 @Service
 public interface MessageService {
 
-	List<Message> getMessageForChat(User user1, User user2);
+	
+	List<Message> getMessagesFrom(int receiverId);
 	
 	void createMsg(Message msg);
+	
+	void sendMsgTo(Message msg, int receiverId);
 	
 	List<Message> getAllMsgs();
 	

@@ -2,11 +2,14 @@ package com.devpull.demo.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -16,13 +19,20 @@ public class Message {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+//	@OneToOne(cascade=CascadeType.ALL)
+//	@JoinColumn(name="receiver_id", referencedColumnName="id")
+//	private User receiver;
+//	
+//	@OneToOne(cascade=CascadeType.ALL)
+//	@JoinColumn(name="sender_id", referencedColumnName="id")
+//	private User sender;
+	
 	@Column(name="receiver_id")
 	private int receiverId;
 	
 	@Column(name="sender_id")
 	private int senderId;
 	
-
 	@Column(name="when")
 	private String dateTime;
 	

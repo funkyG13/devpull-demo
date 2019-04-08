@@ -1,6 +1,10 @@
 package com.devpull.demo.config;
 
+import javax.servlet.Filter;
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import com.devpull.demo.filters.CORSFilter;
 
 public class DispatcherInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -22,5 +26,9 @@ public class DispatcherInitializer extends AbstractAnnotationConfigDispatcherSer
 		return  new String[] {"/"};
 	}
 	
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[]{ new CORSFilter()};
+    }
 
 }

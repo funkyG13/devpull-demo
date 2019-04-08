@@ -1,5 +1,6 @@
 package com.devpull.demo.daoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,27 +17,16 @@ import com.devpull.demo.model.User;
 @Repository
 public class MessageDaoImpl implements MessageDao {
 
-	@Autowired
-	private EntityManager em; 
 	
-	@Override
-	public List<Message> getMessageForChat(User user1, User user2) {
+	private EntityManager em; 
 
-		Session curSession = em.unwrap(Session.class);
-		
-		Query<Message> query = curSession.createQuery("from Message where senderId=:sender AND receiverId=:receiver",
-														Message.class);
-		
-		query.setParameter("sender", user1);	
-		query.setParameter("receiver", user2);
-		
-		List<Message> msgs = query.getResultList();
-		
-		return msgs;
+	@Autowired
+	public MessageDaoImpl(EntityManager em) {
+		this.em = em;
 	}
 
 	@Override
-	public void createMsg(Message msg) {
+	public void sendMsgTo(Message msg, int receiverId) {
 
 		Session curSession = em.unwrap(Session.class);
 		
@@ -54,6 +44,27 @@ public class MessageDaoImpl implements MessageDao {
 		List<Message> msgs = query.getResultList();
 		
 		return msgs;
+	}
+
+	@Override
+	public List<Message> getMessagesFrom(int receiverId) {
+
+		Session curSession = em.unwrap(Session.class);
+
+		List<Message> msgs = getAllMsgs();
+		List<Message> tempList = new ArrayList<Message>();
+		for (Message message : msgs) {
+			if(receiverId == message.getReceiverId()) {}
+			tempList.add(message);
+		}
+		
+		return tempList;
+	}
+
+	@Override
+	public void createMsg(Message msg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

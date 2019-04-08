@@ -7,9 +7,13 @@ import com.devpull.demo.model.User;
 
 public interface MessageDao {
 
-	public List<Message> getMessageForChat(User user1, User user2);
+
+	
+	public List<Message> getMessagesFrom(int receiverId);
 	
 	public void createMsg(Message msg);
+	
+	public void sendMsgTo(Message msg,int receiverId);
 	
 	public List<Message> getAllMsgs();
 	
