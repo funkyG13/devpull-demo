@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import com.devpull.demo.services.AdminService;
 import com.devpull.demo.util.CustomErrorType;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api")
 public class UserController {
 
@@ -38,7 +40,7 @@ public class UserController {
 		this.adminService = adminService;
 	}
 
-	//returns list of users at "/users"
+
 	@GetMapping("/users")
 	public ResponseEntity<List<User>>  users(){
 		
@@ -71,7 +73,7 @@ public class UserController {
 		logger.info("Adding User "+ user);
 		
 		if (adminService.userExists(user)) {
-			logger.error("Unable to create user with username: "+ user.getUsername(), user.getUsername());
+			logger.error("Unable to create user with username: {}", user.getUsername());
 			return new ResponseEntity<Void>(new CustomErrorType("Unable to create user with username: "+
 												user.getUsername()),HttpStatus.CONFLICT );
 		}
@@ -100,9 +102,7 @@ public class UserController {
 		currUser.setUsername(user.getUsername());
 		currUser.setPassword(user.getPassword());
 		currUser.setEmail(user.getEmail());
-		currUser.setAboutMe(user.getAboutMe());
-		currUser.setUserCv(user.getUserCv());
-		currUser.setJobDescr(user.getJobDescr());
+
 		
 		adminService.update(user);
 		

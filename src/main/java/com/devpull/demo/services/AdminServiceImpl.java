@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devpull.demo.dao.UserDao;
+import com.devpull.demo.model.Role;
 import com.devpull.demo.model.User;
 
 @Service
@@ -53,6 +54,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
+	@Transactional
 	public User getUserByUsername(String username) {
 		return userDao.getUserByUsername(username);
 	}
@@ -61,6 +63,12 @@ public class AdminServiceImpl implements AdminService {
 	@Transactional
 	public void update(User user) {
 		userDao.update(user);
+	}
+
+	@Override
+	public Role findByRole(String role) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

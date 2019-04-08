@@ -2,6 +2,7 @@ package com.devpull.demo.services;
 
 import java.util.List;
 
+import com.devpull.demo.model.Role;
 import com.devpull.demo.model.User;
 
 public interface AdminService {
@@ -14,4 +15,8 @@ public interface AdminService {
 	 User getUserByUsername(String username);
 
 	 boolean userExists(User user);
+	 
+	 Role findByRole(String role);
+	 
+	 //int registerUser(User user);
 }

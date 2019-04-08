@@ -2,6 +2,7 @@ package com.devpull.demo.dao;
 
 import java.util.List;
 
+import com.devpull.demo.model.Role;
 import com.devpull.demo.model.User;
 
 public interface UserDao {
@@ -14,5 +15,11 @@ public interface UserDao {
 	public void update(User user);
 	public boolean userExists(User user);
 	
+	public List<User> findAllCompanies();
+	public List<User> findAllUsers();
 	
+	public Role findByRole(String role);
+	
+	
+//	public boolean validateUser(User user);
 }

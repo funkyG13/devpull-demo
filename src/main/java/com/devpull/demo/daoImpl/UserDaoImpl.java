@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.devpull.demo.dao.UserDao;
+import com.devpull.demo.model.Role;
 import com.devpull.demo.model.User;
 
 @Repository
@@ -28,14 +29,10 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> findAll() {
 
-		
-		//get current hibernate session
 		Session curSession = em.unwrap(Session.class);
-		
-		//create the query
+
 		Query<User> query = curSession.createQuery("from User", User.class);
-		
-		//execute query
+
 		List<User> users = query.getResultList();
 		
 		//return results
@@ -98,13 +95,49 @@ public class UserDaoImpl implements UserDao {
 		
 		session.merge(user);	
 		
-//		List<User> users = findAll();
-//		for(User us: users) {
-//			if(user.getId()== us.getId()) {
-//				int index = users.indexOf(us);
-//				users.set(index, user);
-//			}
 		}
+
+	@Override
+	public Role findByRole(String role) {
+
+		return null;
+	}
+
+	@Override
+	public List<User> findAllCompanies() {
+		
+		Session curSession = em.unwrap(Session.class);
+
+		Query<User> query = curSession.createSQLQuery("select user_id from user_role where role_id='3'");
+
+		List<User> users = query.getResultList();		
+		
+		return users;
+	}
+
+	@Override
+	public List<User> findAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+//	@Override
+//	public boolean validateUser(User user) {
+//
+//		Session session = em.unwrap(Session.class);
+//		
+//		String username = user.getUsername();
+//		String password = user.getPassword();
+//		
+//		Query query = session.createQuery("from User where username=: username AND password=: password", User.class);
+//		
+//		query.setParameter("username", username);
+//		query.setParameter("password", password);
+//		
+//		query.executeUpdate();
+//		
+//		return false;
+//	}
 	}
 
 	

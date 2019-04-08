@@ -1,13 +1,17 @@
 package com.devpull.demo.model;
 
 import java.io.File;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -21,9 +25,9 @@ public class User {
     @Column(name="id")
     private int id;
     
-    @Column(name="firstname")
+    @Column(name="first_name")
     private String firstName;
-    @Column(name="lastname")
+    @Column(name="last_name")
     private String lastName;
     @Column(name="email")
     private String email;
@@ -32,18 +36,13 @@ public class User {
     private String username;
     @Column(name="password")
     private String password;
+    
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="user_role", joinColumns=@JoinColumn(name="user_id"), 
+    inverseJoinColumns=@JoinColumn(name="role_id"))
+    private Set<Role> roles;
 
-    @Column(name="cv")
-    private File userCv;
-    @Column(name="about_me")
-    private String aboutMe;
-    @Column(name="job_description")
-    private String jobDescr;   
-//    
-//    @OneToMany
-//    @JoinColumn(name="user_role_id")
-//    private User role;
-// 
+    
     public User() {
     }
     
@@ -95,42 +94,15 @@ public class User {
         this.email = email;
     }
 
-    public File getUserCv() {
-        return userCv;
-    }
+	public Set<Role> getRoles() {
+		return roles;
+	}
 
-    public void setUserCv(File userCv) {
-        this.userCv = userCv;
-    }
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 
-    public String getAboutMe() {
-        return aboutMe;
-    }
 
-    public void setAboutMe(String aboutMe) {
-        this.aboutMe = aboutMe;
-    }
-
-    public String getJobDescr() {
-        return jobDescr;
-    }
-
-    public void setJobDescr(String jobDescr) {
-        this.jobDescr = jobDescr;
-    }
-
-//    public User getRole() {
-//        return role;
-//    }
-//
-//    public void setRole(User role) {
-//        this.role = role;
-//    }
-    
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", username=" + username + ", password=" + password + ", userCv=" + userCv + ", aboutMe=" + aboutMe + ", jobDescr=" + jobDescr + '}';
-    }
 
     
     
