@@ -1,5 +1,6 @@
 package com.devpull.demo.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,8 +18,10 @@ import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name="role")
-public class Role {
+public class Role implements Serializable {
 
+	
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")

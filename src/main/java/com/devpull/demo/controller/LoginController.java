@@ -43,9 +43,9 @@ public class LoginController {
 		logger.info("to username einai {}", username);
 		
 		
-		
 		user = adminService.getUser(username, password);
 		
+		logger.info("lalala");
 		
 		if(user == null) {
 			
@@ -55,6 +55,8 @@ public class LoginController {
 		
 		String token = tokenService.createToken(user);
 	
+		logger.info(token);
+		
 		return new ResponseEntity<String>(token,HttpStatus.OK);
 
 	}

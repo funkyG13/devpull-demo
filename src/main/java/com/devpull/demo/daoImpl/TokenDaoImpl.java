@@ -33,10 +33,10 @@ public class TokenDaoImpl implements TokenDao {
 	            
 	            Session curSession = em.unwrap(Session.class);
 	            
-	            Query query = curSession.createSQLQuery("insert into persistent_logins values(?,?)");
+	            Query query = curSession.createSQLQuery("insert into persistent_logins values(default,?,?)");
 	            
-	            query.setParameter(0, user.getId());
-	            query.setParameter(1, uuid);
+	            query.setParameter(1, user.getId());
+	            query.setParameter(2, uuid);
 	            
 	            query.executeUpdate();
 	            

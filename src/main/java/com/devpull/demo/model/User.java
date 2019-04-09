@@ -25,13 +25,16 @@ public class User {
     
     @Column(name="first_name")
     private String firstName;
+    
     @Column(name="last_name")
     private String lastName;
+    
     @Column(name="email")
     private String email;
     
     @Column(name="username")
     private String username;
+    
     @Column(name="password")
     private String password;
     
@@ -40,13 +43,13 @@ public class User {
     @JoinColumn(name="role_id")
     private Role role;
 
-    @OneToOne(mappedBy="senderMsg", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-            CascadeType.REFRESH })
-    private Message sender;
-    
-    @OneToOne(mappedBy="receiverMsg", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-            CascadeType.REFRESH })
-    private Message receiver;
+//    @OneToOne(mappedBy="senderMsg", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+//            CascadeType.REFRESH })
+//    private Message sender;
+//    
+//    @OneToOne(mappedBy="receiverMsg", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+//            CascadeType.REFRESH })
+//    private Message receiver;
     
     public User() {
     }
@@ -57,14 +60,12 @@ public class User {
 	this.password = password;
 }
 
-	public User(String firstName, String lastName, String email, String username, String password, Role role) {
-		super();
+	public User(String firstName, String lastName, String email, String username) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.username = username;
-		this.password = password;
-		this.role = role;
+
 	}
 
 
@@ -122,6 +123,13 @@ public class User {
 
 	public void setRoles(Role role) {
 		this.role = role;
+	}
+
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", username=" + username + ", password=" + password + ", role=" + role + "]";
 	}
 
 

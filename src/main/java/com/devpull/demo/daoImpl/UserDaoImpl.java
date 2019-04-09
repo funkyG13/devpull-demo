@@ -132,57 +132,36 @@ public class UserDaoImpl implements UserDao {
 		return users;
 	}
 
-
 	@Override
 	public User getUser(String username, String password) {
 
-//		List<User> users = findAll();
-//		for(User user: users) {
-//			if(user.getUsername().equals(username)
-//					&& user.getPassword().equals(password)) {
-//				return user;
-//			}	
-//		}
-//		return null;
-	
-		
-		Session session = em.unwrap(Session.class);
-		
-////		String sql = "select * from user u where u.username=:username and u.password=:password";
-//		
-//		Query query = session.createSQLQuery(sql).addEntity(User.class);
-		
-		Query<User> query = session.createQuery("from User U where U.username=:username and U.password=:password ", User.class);
 
-		logger.info("eftase edw1");
-		
-		List<User> result = query.list();
-		logger.info(username+"  "+password);
-		
-//		List<User> users = query.getResultList();
-//		
+		List<User> users = findAll();
+		for(User user: users) {
+			if(user.getUsername().equals(username)
+					&& user.getPassword().equals(password)) {
+
+				logger.info("o user einai : "+user.toString());
+
+				
+				return user;
+			}
+		}
 
 		return null;
 		
 	}
 
-//	@Override
-//	public boolean validateUser(User user) {
-//
-//		Session session = em.unwrap(Session.class);
-//		
-//		String username = user.getUsername();
-//		String password = user.getPassword();
-//		
-//		Query query = session.createQuery("from User where username=: username AND password=: password", User.class);
-//		
-//		query.setParameter("username", username);
-//		query.setParameter("password", password);
-//		
-//		query.executeUpdate();
-//		
-//		return false;
+
+//	List<User> users = findAll();
+//	for(User user: users) {
+//		if(user.getUsername().equals(username)
+//				&& user.getPassword().equals(password)) {
+//			return user;
+//		}	
 //	}
+//	return null;
+
 	}
 
 	

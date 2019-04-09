@@ -23,12 +23,7 @@ public class RegisterController {
 	@PostMapping("/signup")
     public ResponseEntity<Void> signup(@RequestBody User user) {
 		
-		user.setId(user.getId());
-		user.setFirstName(user.getFirstName());
-		user.setLastName(user.getLastName());
-		user.setUsername(user.getUsername());
-		user.setPassword(user.getPassword());
-		user.setEmail(user.getEmail());
+
 		
 		
 		
