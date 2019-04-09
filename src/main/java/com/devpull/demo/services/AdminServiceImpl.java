@@ -71,17 +71,23 @@ public class AdminServiceImpl implements AdminService {
 		return null;
 	}
 
-	@Override
-	public User checkUserLogin(String username, String pass) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	@Transactional
 	public User getUser(String username, String password) {
-		// TODO Auto-generated method stub
 		return userDao.getUser(username, password);
+	}
+
+	@Override
+	@Transactional
+	public List<User> findAllCompanies() {
+		return userDao.findAllCompanies();
+	}
+
+	@Override
+	@Transactional
+	public List<User> findAllUsers() {
+		return userDao.findAllUsers();
 	}
 
 }

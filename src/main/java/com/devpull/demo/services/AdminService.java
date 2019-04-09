@@ -12,15 +12,18 @@ public interface AdminService {
 	 void saveUser(User user);
 	 void update(User user);
 	 void deleteUserById(int id);
+	 
 	 User getUserByUsername(String username);
 
 	 boolean userExists(User user);
 	 
 	 Role findByRole(String role);
 	 
-	 User checkUserLogin(String username, String pass);
-	 
 	 User getUser(String username, String password);
+	 
+	 List<User> findAllCompanies();
+	
+	 List<User> findAllUsers();
 	 
 	 //int registerUser(User user);
 }

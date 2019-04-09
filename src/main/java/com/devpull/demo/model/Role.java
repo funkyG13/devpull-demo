@@ -2,6 +2,7 @@ package com.devpull.demo.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,8 +27,8 @@ public class Role {
 	@Column(name="role_name")
 	private String roleName;
 	
-	@OneToMany(mappedBy="role")
-	@Fetch(FetchMode.JOIN)
+	@OneToMany(mappedBy="role",cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH })
 	private List<User> users;
 
 	public int getId() {

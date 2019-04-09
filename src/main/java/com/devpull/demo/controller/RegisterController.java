@@ -20,11 +20,19 @@ public class RegisterController {
 	@Autowired
 	private AdminService adminService;
 	
-//	@PostMapping("/signup")
-//    public ResponseEntity<?> signup(@RequestBody User user) {
-//   		user.setRoles(Arrays.asList(new UserRole("USER")));
-//    	User newUser = adminService.addUser(user);
-//    	return new ResponseEntity<>(HttpStatus.CREATED);
-//    }
+	@PostMapping("/signup")
+    public ResponseEntity<Void> signup(@RequestBody User user) {
+		
+		user.setId(user.getId());
+		user.setFirstName(user.getFirstName());
+		user.setLastName(user.getLastName());
+		user.setUsername(user.getUsername());
+		user.setPassword(user.getPassword());
+		user.setEmail(user.getEmail());
+		
+		
+		
+    	return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
 	
 }

@@ -68,7 +68,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<Void> addUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<Void> addUser(@RequestBody User user) {
 		
 		logger.info("Adding User "+ user);
 		
@@ -79,9 +79,9 @@ public class UserController {
 		}
 		adminService.saveUser(user);
 		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+		logger.info("edw");
+		
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/users/{userId}")
@@ -123,6 +123,31 @@ public class UserController {
 	adminService.deleteUserById(userId);
 	
 	return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@GetMapping("/profile/companies")
+	public ResponseEntity<List<User>>  showAllCompanies(){
+		
+		List<User> users = adminService.findAllCompanies();
+		
+		if(users.isEmpty()) {
+			return new ResponseEntity<>(users , HttpStatus.NOT_FOUND);
+		}
+		
+	return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+	}
+	
+	@GetMapping("/profile/developers")
+	public ResponseEntity<List<User>>  showAllDevelopers(){
+		
+		
+		List<User> users = adminService.findAllUsers();
+		
+		if(users.isEmpty()) {
+			return new ResponseEntity<>(users , HttpStatus.NOT_FOUND);
+		}
+		
+	return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 	
 }

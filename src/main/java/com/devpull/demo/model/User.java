@@ -1,7 +1,5 @@
 package com.devpull.demo.model;
 
-import java.io.File;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,8 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -38,17 +35,18 @@ public class User {
     @Column(name="password")
     private String password;
     
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinTable(name="user_role",
-    			joinColumns=@JoinColumn(name="user_id"),
-    			inverseJoinColumns=@JoinColumn(name="role_id"))
+    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH })
+    @JoinColumn(name="role_id")
     private Role role;
 
-//    @OneToOne(mappedBy="user", cascade =CascadeType.ALL)
-//    private Message sender;
+    @OneToOne(mappedBy="senderMsg", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH })
+    private Message sender;
     
-//    @OneToOne(mappedBy="user")
-//    private Message receiver;
+    @OneToOne(mappedBy="receiverMsg", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH })
+    private Message receiver;
     
     public User() {
     }
@@ -58,6 +56,17 @@ public class User {
 	this.username = username;
 	this.password = password;
 }
+
+	public User(String firstName, String lastName, String email, String username, String password, Role role) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+	}
+
 
 	public String getUsername() {
         return username;

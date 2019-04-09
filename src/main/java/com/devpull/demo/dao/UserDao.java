@@ -2,7 +2,7 @@ package com.devpull.demo.dao;
 
 import java.util.List;
 
-import com.devpull.demo.model.Login;
+
 import com.devpull.demo.model.Role;
 import com.devpull.demo.model.User;
 
@@ -23,7 +23,7 @@ public interface UserDao {
 		
 	public User getUser(String username, String password);
 	
-	public User checkLogin(Login login);
+	
 	
 //	public boolean validateUser(User user);
 }

@@ -19,19 +19,16 @@ public class Message {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="receiver_id", referencedColumnName="id")
-	private User receiver;
+	@OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH })
+	@JoinColumn(name="receiver_id")
+	private User receiverMsg;
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="sender_id", referencedColumnName="id")
-	private User sender;
+	@OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH })
+	@JoinColumn(name="sender_id")
+	private User senderMsg;
 	
-//	@Column(name="receiver_id")
-//	private int receiverId;
-//	
-//	@Column(name="sender_id")
-//	private int senderId;
 	
 	@Column(name="when")
 	private String dateTime;
@@ -50,36 +47,20 @@ public class Message {
 		this.id = id;
 	}
 
-//	public int getReceiverId() {
-//		return receiverId;
-//	}
-//
-//	public void setReceiverId(int receiverId) {
-//		this.receiverId = receiverId;
-//	}
-//
-//	public int getSenderId() {
-//		return senderId;
-//	}
-
-//	public void setSenderId(int senderId) {
-//		this.senderId = senderId;
-//	}
-
 	public User getReceiver() {
-		return receiver;
+		return receiverMsg;
 	}
 
 	public void setReceiver(User receiver) {
-		this.receiver = receiver;
+		this.receiverMsg = receiver;
 	}
 
 	public User getSender() {
-		return sender;
+		return senderMsg;
 	}
 
 	public void setSender(User sender) {
-		this.sender = sender;
+		this.senderMsg = sender;
 	}
 
 	public String getDateTime() {
