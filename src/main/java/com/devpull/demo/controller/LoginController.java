@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devpull.demo.dao.TokenDao;
+import com.devpull.demo.model.Login;
 import com.devpull.demo.model.User;
 import com.devpull.demo.services.AdminService;
 import com.devpull.demo.services.TokenService;
@@ -36,13 +36,12 @@ public class LoginController {
 	
 	
 	@PostMapping("/check")
-	public ResponseEntity<String> loginUser(@RequestParam String username, 
-											@RequestParam String pass){
+	public ResponseEntity<String> loginUser(@RequestBody Login login){
 		logger.info("checking credentials");
 		
 		User user = new User();
 		
-		user = adminService.getUser(username, pass);
+		user = adminService.getUser(login.getUsername(), login.getPassword());
 		
 		
 		if(user == null) {

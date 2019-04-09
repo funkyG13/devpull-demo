@@ -4,20 +4,26 @@ package com.devpull.demo.daoImpl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.devpull.demo.controller.LoginController;
 import com.devpull.demo.dao.UserDao;
+import com.devpull.demo.model.Login;
 import com.devpull.demo.model.Role;
 import com.devpull.demo.model.User;
 
 @Repository
 public class UserDaoImpl implements UserDao {
+	
+	public static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 
-	//define Entity Manager
 	private EntityManager em; 
 	
 	//set up construction injection
@@ -125,22 +131,62 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User getUser(String username, String password) {
 
+//		List<User> users = findAll();
+//		for(User user: users) {
+//			if(user.getUsername().equals(username)
+//					&& user.getPassword().equals(password)) {
+//				user.setUsername(username);
+//				user.setPassword(password);
+//				return user;
+//			}	
+//		}
+//		return null;
+	
+		
 		Session session = em.unwrap(Session.class);
 		
-//		String sql = "select * from user where username=:username AND where password=:password";
+////		String sql = "select * from user u where u.username=:username and u.password=:password";
 //		
-//		Query query = session.createNativeQuery(sql);
+//		Query query = session.createSQLQuery(sql).addEntity(User.class);
 		
-		Query query = session.createQuery("from user u where u.username= :username and u.password= :password",User.class);
+		Query<User> query = session.createQuery("from User U where U.username=:username and U.password=:password", User.class);
 		
+	
+//		query.setParameter(0, user.)
+		logger.info("eftase edw1");
 		query.setParameter("username", username);
 		query.setParameter("password", password);
 		
-//		List<User> results = query.getResultList();
+		query.executeUpdate();
 		
-		User user = (User) query.getSingleResult();
+		logger.info("eftase edw2");
+		List<User> result = query.list();
+		logger.info(username+"  "+password);
 		
-		return user;
+		
+		
+//		User user = (User) query.uniqueResult();
+		
+//		List<User> users = query.getResultList();
+//		
+		for (User user : result) {
+			if(user.getUsername().equals(username)
+					&& user.getPassword().equals(password)) {
+				return user;
+		}
+		}
+		logger.info("eftase edw");
+		
+		return null;
+		
+	}
+
+	@Override
+	public User checkLogin(Login login) {
+
+		
+		
+		return null;
 	}
 
 //	@Override
