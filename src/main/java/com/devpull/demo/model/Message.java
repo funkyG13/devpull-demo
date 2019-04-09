@@ -19,19 +19,19 @@ public class Message {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-//	@OneToOne(cascade=CascadeType.ALL)
-//	@JoinColumn(name="receiver_id", referencedColumnName="id")
-//	private User receiver;
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="receiver_id", referencedColumnName="id")
+	private User receiver;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="sender_id", referencedColumnName="id")
+	private User sender;
+	
+//	@Column(name="receiver_id")
+//	private int receiverId;
 //	
-//	@OneToOne(cascade=CascadeType.ALL)
-//	@JoinColumn(name="sender_id", referencedColumnName="id")
-//	private User sender;
-	
-	@Column(name="receiver_id")
-	private int receiverId;
-	
-	@Column(name="sender_id")
-	private int senderId;
+//	@Column(name="sender_id")
+//	private int senderId;
 	
 	@Column(name="when")
 	private String dateTime;
@@ -50,29 +50,46 @@ public class Message {
 		this.id = id;
 	}
 
-	public int getReceiverId() {
-		return receiverId;
+//	public int getReceiverId() {
+//		return receiverId;
+//	}
+//
+//	public void setReceiverId(int receiverId) {
+//		this.receiverId = receiverId;
+//	}
+//
+//	public int getSenderId() {
+//		return senderId;
+//	}
+
+//	public void setSenderId(int senderId) {
+//		this.senderId = senderId;
+//	}
+
+	public User getReceiver() {
+		return receiver;
 	}
 
-	public void setReceiverId(int receiverId) {
-		this.receiverId = receiverId;
+	public void setReceiver(User receiver) {
+		this.receiver = receiver;
 	}
 
-	public int getSenderId() {
-		return senderId;
+	public User getSender() {
+		return sender;
 	}
 
-	public void setSenderId(int senderId) {
-		this.senderId = senderId;
+	public void setSender(User sender) {
+		this.sender = sender;
 	}
 
-	public String getWhen() {
+	public String getDateTime() {
 		return dateTime;
 	}
 
-	public void setWhen(String when) {
-		this.dateTime = when;
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
 	}
+
 
 	public String getMsgData() {
 		return msgData;

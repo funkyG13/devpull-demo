@@ -18,5 +18,9 @@ public interface AdminService {
 	 
 	 Role findByRole(String role);
 	 
+	 User checkUserLogin(String username, String pass);
+	 
+	 User getUser(String username, String password);
+	 
 	 //int registerUser(User user);
 }

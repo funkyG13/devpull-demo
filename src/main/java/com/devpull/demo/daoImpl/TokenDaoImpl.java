@@ -16,36 +16,35 @@ import com.devpull.demo.model.User;
 @Repository
 public class TokenDaoImpl implements TokenDao {
 
+	@Autowired
+	private UserDao userDao;
+	
 	private EntityManager em; 
 		
 	@Autowired
 	public TokenDaoImpl(EntityManager em) {
-		super();
 		this.em = em;
 	}
 
 	@Override
 	public String createToken(User user) {
-		 try {
+		
 	            String uuid = UUID.randomUUID().toString();
 	            
 	            Session curSession = em.unwrap(Session.class);
 	            
-	            Query query = curSession.createSQLQuery("insert into persistent_logins values(?,?,?,?)");
+	            Query query = curSession.createSQLQuery("insert into persistent_logins values(?,?)");
 	            
-	            query.setParameter(0, user.getUsername());
-//	            query.setParameter(1, user.getUsername());
+	            query.setParameter(0, user.getId());
+	            query.setParameter(1, uuid);
 	            
-		 }catch(Exception e) {
-			 
-			 
-		 }
-		 
-		 return null;
+	            query.executeUpdate();
+	            
+	   		 return uuid;		 
 	}
 
 	@Override
-	public User getUserOfToken(String token, UserDao userDao) {
+	public User getUserOfToken(String token) {
 		// TODO Auto-generated method stub
 		return null;
 	}

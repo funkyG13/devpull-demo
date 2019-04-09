@@ -50,19 +50,19 @@ public class MessageController {
 
 	}
 
-	@PostMapping("/send_msg/{receiverId}")
-	public ResponseEntity<Void> sendMsgTo(@RequestBody Message msg, 
-											@PathVariable int receiverId) {
+	@PostMapping("/send_msg")
+	public ResponseEntity<Void> sendMsgTo(@RequestBody Message msg, User user){
 
 		logger.info("Creating Msg " + msg.getMsgData());
 
-		if (msg.getReceiverId() == 0) {
+//		user = adminService.getUserByUsername();
+		
+		if (msg.getReceiver() == null) {
 			logger.error("Unable to create Message.");
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
-		msgService.sendMsgTo(msg, receiverId);
+		msgService.sendMsgTo(msg, user);
 		
-
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	

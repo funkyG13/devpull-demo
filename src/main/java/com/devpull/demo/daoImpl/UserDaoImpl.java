@@ -121,6 +121,28 @@ public class UserDaoImpl implements UserDao {
 		return null;
 	}
 
+
+	@Override
+	public User getUser(String username, String password) {
+
+		Session session = em.unwrap(Session.class);
+		
+//		String sql = "select * from user where username=:username AND where password=:password";
+//		
+//		Query query = session.createNativeQuery(sql);
+		
+		Query query = session.createQuery("from user u where u.username= :username and u.password= :password",User.class);
+		
+		query.setParameter("username", username);
+		query.setParameter("password", password);
+		
+//		List<User> results = query.getResultList();
+		
+		User user = (User) query.getSingleResult();
+		
+		return user;
+	}
+
 //	@Override
 //	public boolean validateUser(User user) {
 //

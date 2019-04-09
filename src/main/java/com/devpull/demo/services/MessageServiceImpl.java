@@ -38,8 +38,8 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	@Transactional
-	public void sendMsgTo(Message msg, int receiverId) {
-			msgDao.sendMsgTo(msg, receiverId);		
+	public void sendMsgTo(Message msg, User user) {
+			msgDao.sendMsgTo(msg, user);		
 	}
 
 }

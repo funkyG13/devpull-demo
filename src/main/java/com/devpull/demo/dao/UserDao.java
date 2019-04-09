@@ -19,7 +19,8 @@ public interface UserDao {
 	public List<User> findAllUsers();
 	
 	public Role findByRole(String role);
-	
+		
+	public User getUser(String username, String password);
 	
 //	public boolean validateUser(User user);
 }

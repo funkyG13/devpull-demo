@@ -20,13 +20,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 public class MyConfig {	
 	
 	
-//	@Bean
-//	public DataSource dataSource() {
-//		DataSource ds = new Data 
-//		
-//	}
-	
-	
 	@Bean
 	public ViewResolver viewResolver() {
 		

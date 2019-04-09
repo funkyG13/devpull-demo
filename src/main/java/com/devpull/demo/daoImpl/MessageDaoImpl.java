@@ -26,7 +26,7 @@ public class MessageDaoImpl implements MessageDao {
 	}
 
 	@Override
-	public void sendMsgTo(Message msg, int receiverId) {
+	public void sendMsgTo(Message msg, User user) {
 
 		Session curSession = em.unwrap(Session.class);
 		
@@ -54,7 +54,7 @@ public class MessageDaoImpl implements MessageDao {
 		List<Message> msgs = getAllMsgs();
 		List<Message> tempList = new ArrayList<Message>();
 		for (Message message : msgs) {
-			if(receiverId == message.getReceiverId()) {}
+			if(receiverId == message.getReceiver().getId()) {}
 			tempList.add(message);
 		}
 		

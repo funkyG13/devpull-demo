@@ -13,7 +13,7 @@ public interface MessageDao {
 	
 	public void createMsg(Message msg);
 	
-	public void sendMsgTo(Message msg,int receiverId);
+	public void sendMsgTo(Message msg,User user);
 	
 	public List<Message> getAllMsgs();
 	
