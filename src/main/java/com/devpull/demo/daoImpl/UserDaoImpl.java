@@ -39,8 +39,7 @@ public class UserDaoImpl implements UserDao {
 		Query<User> query = curSession.createQuery("from User", User.class);
 
 		List<User> users = query.getResultList();
-		
-		//return results
+
 		return users;
 	}
 
@@ -58,6 +57,11 @@ public class UserDaoImpl implements UserDao {
 	public void saveUser(User user) {
 
 		Session session = em.unwrap(Session.class);
+		
+		int id =2;
+		Role role = session.get(Role.class, id);
+		
+		user.setRole(role);
 		
 		session.save(user);
 	}

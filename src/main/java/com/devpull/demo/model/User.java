@@ -43,13 +43,13 @@ public class User {
     @JoinColumn(name="role_id")
     private Role role;
 
-//    @OneToOne(mappedBy="senderMsg", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-//            CascadeType.REFRESH })
-//    private Message sender;
-//    
-//    @OneToOne(mappedBy="receiverMsg", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-//            CascadeType.REFRESH })
-//    private Message receiver;
+    @OneToOne(mappedBy="senderMsg", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH })
+    private Message sender;
+    
+    @OneToOne(mappedBy="receiverMsg", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH })
+    private Message receiver;
     
     public User() {
     }
@@ -121,8 +121,29 @@ public class User {
 		return role;
 	}
 
-	public void setRoles(Role role) {
+	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	
+
+	public Message getSender() {
+		return sender;
+	}
+
+
+	public void setSender(Message sender) {
+		this.sender = sender;
+	}
+
+
+	public Message getReceiver() {
+		return receiver;
+	}
+
+
+	public void setReceiver(Message receiver) {
+		this.receiver = receiver;
 	}
 
 

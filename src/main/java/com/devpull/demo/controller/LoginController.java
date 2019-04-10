@@ -36,7 +36,6 @@ public class LoginController {
 	@PostMapping("/check")
 	public ResponseEntity<String> loginUser(@RequestParam String username, 
 											@RequestParam String password){
-		logger.info("checking credentials");
 		
 		User user = adminService.getUserByUsername(username);
 		
@@ -45,7 +44,6 @@ public class LoginController {
 		
 		user = adminService.getUser(username, password);
 		
-		logger.info("lalala");
 		
 		if(user == null) {
 			

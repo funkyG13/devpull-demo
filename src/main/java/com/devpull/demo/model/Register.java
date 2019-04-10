@@ -14,7 +14,9 @@ public class Register {
     private String password;
     private Role role;
     
-    
+	public Register() {
+	}
+
 	public Register(String firstName, String lastName, String email, String username, String password, Role role) {
 		this.firstName = firstName;
 		this.lastName = lastName;

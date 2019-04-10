@@ -15,14 +15,6 @@ public class MessageServiceImpl implements MessageService {
 
 	@Autowired
 	private MessageDao msgDao;
-	
-
-	@Override
-	@Transactional
-	public void createMsg(Message msg) {
-
-		msgDao.createMsg(msg);
-	}
 
 	@Override
 	@Transactional
@@ -38,8 +30,8 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	@Transactional
-	public void sendMsgTo(Message msg, User user) {
-			msgDao.sendMsgTo(msg, user);		
+	public Message sendMsgTo(User sender, User receiver, String msgData) {
+		return msgDao.sendMsgTo(sender, receiver, msgData);
 	}
 
 }

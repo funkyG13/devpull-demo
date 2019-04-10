@@ -13,9 +13,7 @@ public interface MessageService {
 	
 	List<Message> getMessagesFrom(int receiverId);
 	
-	void createMsg(Message msg);
-	
-	void sendMsgTo(Message msg, User user);
+	Message sendMsgTo(User sender,User receiver,String msgData);
 	
 	List<Message> getAllMsgs();
 	

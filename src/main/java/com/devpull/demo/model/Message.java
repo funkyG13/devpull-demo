@@ -29,15 +29,21 @@ public class Message {
 	@JoinColumn(name="sender_id")
 	private User senderMsg;
 	
-	
-	@Column(name="when")
-	private String dateTime;
-	
 	@Column(name="text")
 	private String msgData;
 	
 	public Message() {
 	}
+	
+	
+
+	public Message(User receiverMsg, User senderMsg, String msgData) {
+		this.receiverMsg = receiverMsg;
+		this.senderMsg = senderMsg;
+		this.msgData = msgData;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -63,14 +69,6 @@ public class Message {
 		this.senderMsg = sender;
 	}
 
-	public String getDateTime() {
-		return dateTime;
-	}
-
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
-	}
-
 
 	public String getMsgData() {
 		return msgData;
@@ -78,6 +76,12 @@ public class Message {
 
 	public void setMsgData(String msgData) {
 		this.msgData = msgData;
+	}
+
+	@Override
+	public String toString() {
+		return "Message [id=" + id + ", receiverMsg=" + receiverMsg + ", senderMsg=" + senderMsg + ", msgData="
+				+ msgData + "]";
 	}
 	
 	

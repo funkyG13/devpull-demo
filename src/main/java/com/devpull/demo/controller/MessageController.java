@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 //import org.springframework.web.util.UriComponentsBuilder;
 
@@ -27,7 +28,7 @@ import com.devpull.demo.services.MessageService;
 @RequestMapping("/api/messages")
 public class MessageController {
 
-	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	public static final Logger logger = LoggerFactory.getLogger(MessageController.class);
 
 	@Autowired
 	private MessageService msgService;
@@ -50,46 +51,44 @@ public class MessageController {
 
 	}
 
-	@PostMapping("/send_msg")
-	public ResponseEntity<Void> sendMsgTo(@RequestBody Message msg, User user){
-
-		logger.info("Creating Msg " + msg.getMsgData());
-
-//		user = adminService.getUserByUsername();
-		
-		if (msg.getReceiver() == null) {
-			logger.error("Unable to create Message.");
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-		}
-		msgService.sendMsgTo(msg, user);
-		
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
-	
-//	@GetMapping("/get_messages_betweet_users/{receiverId}")
-//	public ResponseEntity<List<Message>> getMsgsBetweenUsers(@RequestBody Message msg,@RequestBody User user1,
-//														@RequestBody User user2, @PathVariable int receiverId){
-//		
-//		logger.info("Getting Msgs Between user1 & user2 " );
-//		
-//		int senderId = user1.getId();
-//		user1.setId(senderId);
-//		user1 = adminService.getUserById(senderId);
-//		
-//		user2 = adminService.getUserById(receiverId);
-//		
-//		if(user1 == null || user2 == null) {
-//			logger.error("Cannot find user1 or user2");
-//			return new ResponseEntity<List<Message>>(new CustomErrorType("User1 with id"+user1.getId()+
-//														" or User 2 "+user2.getId()+"are null"), HttpStatus.BAD_REQUEST);
-//			
-//		}
-//		
-//		List<Message> msgs = msgService.getMessageForChat(user1, user2);
-//		
-//		return new ResponseEntity<List<Message>>(msgs, HttpStatus.OK);
+//	@PostMapping("/send_msg")
+//	public ResponseEntity<Void> sendMsgTo(@RequestBody Message msg, User user){
 //
+//		logger.info("Creating Msg " + msg.getMsgData() + " sender: "+msg.getSender()+ " receiver: "+ msg.getReceiver());
+//
+//		logger.info("receiver: " + user.getReceiver() + " sender: "+user.getSender() );
+//		
+//		 user = adminService.getUserById(user.getId());
+//		 logger.info("user "+ user.toString());
+//		
+//		if (msg.getReceiver() == null) {
+//			logger.error("Unable to create Message.");
+//			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+//		}
+//		msgService.sendMsgTo(msg.getSender(), msg.getReceiver(), msg.getMsgData());
+//		
+//		return new ResponseEntity<Void>(HttpStatus.OK);
 //	}
+	
+	
+	@PostMapping("/send_msg")
+	public ResponseEntity<Message> sendMsgTo(@RequestParam User sender,
+			@RequestParam User receiver, @RequestParam String msgData){
+
+
+		logger.info("receiver: " + receiver.getReceiver() + " sender: "+sender.getSender() );
+		
+		 sender = adminService.getUserById(sender.getId());
+		 logger.info("senderId "+ sender.getId());
+		
+//		if (receiver == null) {
+//			logger.error("Unable to create Message.");
+//			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+//		}
+		Message msg = msgService.sendMsgTo(sender, receiver, msgData);
+		
+		return new ResponseEntity<Message>(msg,HttpStatus.OK);
+	}
 
 	@GetMapping("/get_messages_from/{receiverId}")
 	public ResponseEntity<List<Message>> getMsgsFromUser(@PathVariable int receiverId){

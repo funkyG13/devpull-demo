@@ -45,8 +45,16 @@ public class TokenDaoImpl implements TokenDao {
 
 	@Override
 	public User getUserOfToken(String token) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createSQLQuery("select user_id from persistent_logins where token= ?");
+		
+		int userId = query.getFirstResult();
+		
+		User user = session.get(User.class, userId);
+
+		return user;
 	}
 
 }

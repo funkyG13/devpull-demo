@@ -34,6 +34,26 @@ public class Role implements Serializable {
             CascadeType.REFRESH })
 	private List<User> users;
 
+	public Role() {
+
+	}
+	
+	public Role(String roleName) {
+		this.roleName = roleName;
+	}
+
+
+
+	public Role(int id, String roleName) {
+		this.id = id;
+		this.roleName = roleName;
+	}
+	
+	public Role(int id) {
+	
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}
