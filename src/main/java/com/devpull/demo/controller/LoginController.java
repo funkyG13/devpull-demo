@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.devpull.demo.model.PersistentLogins;
 import com.devpull.demo.model.User;
 import com.devpull.demo.services.AdminService;
 import com.devpull.demo.services.TokenService;
@@ -33,22 +35,24 @@ public class LoginController {
 	private AdminService adminService;
 
 	@PostMapping("/login")
-	public ResponseEntity<String> loginUser(@RequestParam String username, @RequestParam String password) {
+	public ResponseEntity<PersistentLogins> loginUser(@RequestParam String username, @RequestParam String password) {
 
 		User user = adminService.getUser(username, password);
 
 		if (user == null) {
 
 			logger.error("There is no such user");
-			return new ResponseEntity<String>(new CustomErrorType("Unable to find user with this uname"),
+			return new ResponseEntity<PersistentLogins>(new CustomErrorType("Unable to find user with this uname"),
 					HttpStatus.NOT_FOUND);
 		}
-
+		
 		String token = tokenService.createToken(user);
 
+		PersistentLogins pl = new PersistentLogins(token); 
+		
 		logger.info(token);
 
-		return new ResponseEntity<String>(token, HttpStatus.OK);
+		return new ResponseEntity<PersistentLogins>(pl, HttpStatus.OK);
 
 	}
 

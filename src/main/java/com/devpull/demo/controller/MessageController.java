@@ -71,8 +71,6 @@ public class MessageController {
 		User sender = adminService.getUserById(senderId);
 		User receiver = adminService.getUserById(receiverId);
 		
-//		logger.info("sender : "+ sender.toString());
-//		logger.info("receiver : "+ receiver.toString());
 		if (!(adminService.userExists(receiver))) {
 			logger.error("Unable to create Message.");
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
@@ -91,7 +89,7 @@ public class MessageController {
 
 	@GetMapping("/get_messages_between")
 	public ResponseEntity<List<CustomMessage>> getMsgsBetween(@RequestParam String token,
-														 @RequestParam int receiverId){
+														 	  @RequestParam int receiverId){
 		
 		logger.info("Getting msgs from receiver with id {}", receiverId);
 		logger.info("Getting msgs from token {}", token);
@@ -102,25 +100,20 @@ public class MessageController {
 		
 		List<Message> msgs = msgService.getMessagesBetween(token, receiverId);
 		
-		
-		
 		List<CustomMessage> customMsgs  = new ArrayList<CustomMessage>(); 
 		CustomMessage cm = new CustomMessage(); 
-		
-		for (Message message : msgs) {
-			
-		int id = message.getId();
-		int theReceiverId = message.getReceiverMsg().getId();
-		int senderId = message.getSenderMsg().getId();
-		String text = message.getMsgData();
-		
-		cm.setId(id);
-		cm.setReceiverId(receiverId);
-		cm.setSenderId(senderId);
-		cm.setText(text);
-		
-		customMsgs.add(cm);
+				
+			for (Message message : msgs) {
+				
+				logger.info(cm.toString());	
+				customMsgs.add(new CustomMessage(message.getId(),receiverId,message.getSenderMsg().getId(),message.getMsgData()));
+				
+				
 		}
+			
+		
+		logger.info("customMsgs "+ customMsgs.toString());
+		
 		logger.info("Custom Msgs Size"+customMsgs.size());
 		
 		

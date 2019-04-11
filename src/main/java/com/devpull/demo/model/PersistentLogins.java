@@ -37,11 +37,14 @@ public class PersistentLogins implements Serializable{
 	
 	@Column(name="last_access_time")
 	private Date lastAccessTime;
-	
-	
+
 
 	public PersistentLogins() {
 
+	}
+
+	public PersistentLogins(String token) {
+		this.token = token;
 	}
 
 	public int getId() {
