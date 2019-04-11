@@ -10,10 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
@@ -31,12 +32,12 @@ public class Message implements Serializable{
 	
 	
 	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="receiver_id")
+	@JoinColumn(name="receiver_id", referencedColumnName="id")
 	private User receiverMsg;
 	
 //	 @JsonIgnore
 	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="sender_id")
+	@JoinColumn(name="sender_id", referencedColumnName="id")
 	private User senderMsg;
 	
 	@Column(name="text")
@@ -50,8 +51,6 @@ public class Message implements Serializable{
 		this.senderMsg = senderMsg;
 		this.msgData = msgData;
 	}
-
-
 
 	public int getId() {
 		return id;

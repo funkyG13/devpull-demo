@@ -85,11 +85,18 @@ public class MessageController {
 	}
 	
 
-	@GetMapping("/get_messages_from/{receiverId}")
-	public ResponseEntity<List<Message>> getMsgsFromUser(@PathVariable int receiverId){
+	@GetMapping("/get_messages_between")
+	public ResponseEntity<List<Message>> getMsgsBetween(@RequestParam String token,
+														 @RequestParam int receiverId){
 		
 		logger.info("Getting msgs from receiver with id {}", receiverId);
-		List<Message> msgs = msgService.getMessagesFrom(receiverId);
+		logger.info("Getting msgs from token {}", token);
+		
+		User sender = tokenService.getUserOfToken(token);
+		
+		logger.info("sender to string: "+ sender.toString());
+		
+		List<Message> msgs = msgService.getMessagesBetween(token, receiverId);
 		
 		if (msgs == null || msgs.isEmpty()) {
 			return new ResponseEntity<List<Message>>(HttpStatus.NO_CONTENT);

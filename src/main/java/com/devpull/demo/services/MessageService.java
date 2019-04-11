@@ -11,7 +11,7 @@ import com.devpull.demo.model.User;
 public interface MessageService {
 
 	
-	List<Message> getMessagesFrom(int receiverId);
+	List<Message> getMessagesBetween(String token, int receiverId);
 	
 	Message sendMsgTo(int senderId,int receiverId,String msgData);
 	

@@ -45,28 +45,59 @@ public class MessageDaoImpl implements MessageDao {
 		Query<Message> query = curSession.createQuery("from Message",Message.class);
 		
 		List<Message> msgs = query.getResultList();
+//		for (Message message : msgs) {
+//			
+//			int receiverId = message.getReceiverMsg().getId();
+//			int senderId = message.getSenderMsg().getId();
+//			
+//			message = new Message(message.getId(), receiverId, senderId);
+//		}
+		
 		
 		return msgs;
 	}
-
 //	public List<Message> getMessagesFrom(String token,int contactId) {
 	
 	@Override
-	public List<Message> getMessagesFrom(int receiverId) {
+	public List<Message> getMessagesBetween(String token, int receiverId) {
 
 		Session curSession = em.unwrap(Session.class);
 		
-//		String sql = "select * from message where receiver_id = ?";
 		
 		User receiver = userDao.getUserById(receiverId);
 		
-		Query<Message> query = curSession.createQuery("from Message where receiverMsg=:receiverId",Message.class);
+		logger.info("receive: "+receiver.toString());
+		
+		User sender = tokenDao.getUserOfToken(token);
+		
+		logger.info(sender.toString());
+		
+//		int senderId = sender.getId();
+		
+//		logger.info("SenderId: "+senderId);
+
+		Query<Message> query = curSession.createQuery("from Message where receiverMsg=:receiverId and senderMsg=:senderId"
+														,Message.class);
 		
 		query.setParameter("receiverId", receiver);
+		query.setParameter("senderId", sender);
 		
 		List<Message> msgs = query.getResultList();
 		
-		return msgs;
+		Query<Message> query1 = curSession.createQuery("from Message where receiverMsg=:senderId and senderMsg=:receiverId"
+															,Message.class);
+		
+		query1.setParameter("receiverId", receiver);
+		query1.setParameter("senderId", receiver);
+		
+		List<Message> msgsReverse = query1.getResultList();
+		
+		List<Message> mergedList = new ArrayList<Message>();
+		mergedList.addAll(msgs);
+		mergedList.addAll(msgsReverse);
+		
+		return mergedList;
+		
 	}
 //		List<Message> msgs = getAllMsgs();
 //		List<Message> tempList = new ArrayList<Message>();

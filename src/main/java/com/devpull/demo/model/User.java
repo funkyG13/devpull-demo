@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -54,12 +53,16 @@ public class User implements Serializable {
     private Role role;
 
     @JsonIgnore
-    @OneToMany(mappedBy="senderMsg",  cascade=CascadeType.ALL,  fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="senderMsg",  cascade=CascadeType.ALL)
     private List<Message> msgSender;
     
     @JsonIgnore
-    @OneToMany(mappedBy="receiverMsg", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    private  List<Message> msgReceiver;
+    @OneToMany(mappedBy="receiverMsg", cascade=CascadeType.ALL )
+    private List<Message> msgReceiver;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy="userId",cascade=CascadeType.ALL)
+    private List<PersistentLogins> persistentLogins;
     
     public User() {
     }
@@ -154,16 +157,13 @@ public class User implements Serializable {
 		this.msgReceiver = msgReceiver;
 	}
 
-	
 
 
-
-
-//	@Override
-//	public String toString() {
-//		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-//				+ ", username=" + username + ", password=" + password + ", role=" + role + "]";
-//	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", username=" + username + ", password=" + password + ",]";
+	}
 
 
 

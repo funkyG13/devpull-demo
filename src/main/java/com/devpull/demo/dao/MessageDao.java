@@ -7,7 +7,7 @@ import com.devpull.demo.model.User;
 
 public interface MessageDao {
 	
-	public List<Message> getMessagesFrom(int receiverId);
+	public List<Message> getMessagesBetween(String token, int receiverId);
 	
 	public Message sendMsgTo(int senderId,int receiverId,String msgData);
 	

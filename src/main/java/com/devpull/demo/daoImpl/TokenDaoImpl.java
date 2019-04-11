@@ -1,21 +1,29 @@
 package com.devpull.demo.daoImpl;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.devpull.demo.dao.TokenDao;
 import com.devpull.demo.dao.UserDao;
+import com.devpull.demo.model.PersistentLogins;
 import com.devpull.demo.model.User;
 
 @Repository
 public class TokenDaoImpl implements TokenDao {
+
+	
+	public static final Logger logger = LoggerFactory.getLogger(TokenDaoImpl.class);
 
 	@Autowired
 	private UserDao userDao;
@@ -34,10 +42,14 @@ public class TokenDaoImpl implements TokenDao {
 	            
 	            Session curSession = em.unwrap(Session.class);
 	            
-	            Query query = curSession.createSQLQuery("insert into persistent_logins values(default,?,?)");
+	            Query query = curSession.createSQLQuery("insert into persistent_logins values(default,?,?,?)");
 	            
+//	            Query query = curSession.createSQLQuery("insert into PersistentLogins(id,userId, token)"
+//	            								+ "select default, userId, token from PersistentLogins");
+//	            query.setParameter(0, default );
 	            query.setParameter(1, user.getId());
 	            query.setParameter(2, uuid);
+	            query.setParameter(3, new Date());
 	            
 	            query.executeUpdate();
 	            
@@ -52,7 +64,7 @@ public class TokenDaoImpl implements TokenDao {
 		
 		User user = userDao.getUserById(userId);
 		
-		useToken(token);
+//		useToken(token);
 		
 		return user;
 	}
@@ -62,9 +74,15 @@ public class TokenDaoImpl implements TokenDao {
 		
 		Session session = em.unwrap(Session.class);
 		
-		Query query = session.createSQLQuery("select user_id from persistent_logins where token= ?");
+		Query<PersistentLogins> query = session.createQuery("from PersistentLogins P where P.token= :token",PersistentLogins.class);
 		
-		int userId = query.getFirstResult();
+		query.setParameter("token", token);
+		
+		PersistentLogins pl = query.getSingleResult();
+		
+			int userId= pl.getUserId().getId();
+			
+			logger.info("userId: +"+userId);			
 		
 		return userId;
 	}
@@ -77,8 +95,7 @@ public class TokenDaoImpl implements TokenDao {
 		
 		Query query = session.createSQLQuery(sql);
 		
-		query.setParameter(2, token);
-		query.setParameter(3, new Date());
+		query.setParameter(1, token);
 		
 		query.executeUpdate();
 		

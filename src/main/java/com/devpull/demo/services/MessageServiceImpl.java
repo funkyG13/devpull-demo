@@ -24,8 +24,8 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	@Transactional
-	public List<Message> getMessagesFrom(int receiverId) {
-		return msgDao.getMessagesFrom(receiverId);
+	public List<Message> getMessagesBetween(String token, int receiverId) {
+		return msgDao.getMessagesBetween(token,receiverId);
 	}
 
 	@Override
