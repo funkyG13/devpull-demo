@@ -28,9 +28,8 @@ public class TokenServiceImpl implements TokenService {
 
 	@Override
 	@Transactional
-	public String getTokenOfUser(User user) {
-		// TODO Auto-generated method stub
-		return tokenDao.getTokenOfUser(user);
+	public void removeToken(String token) {
+		tokenDao.removeToken(token);
 	}
 	
 

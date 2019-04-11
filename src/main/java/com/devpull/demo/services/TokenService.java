@@ -8,5 +8,5 @@ public interface TokenService {
 	 
 	User getUserOfToken(String token);
 	
-	String getTokenOfUser(User user);
+	void removeToken(String token);
 }

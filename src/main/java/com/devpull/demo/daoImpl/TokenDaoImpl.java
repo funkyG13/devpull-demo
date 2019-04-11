@@ -98,21 +98,17 @@ public class TokenDaoImpl implements TokenDao {
 		logger.info("rows affected "+result);
 	}
 
-	@Override
-	public String getTokenOfUser(User user) {
 
+	@Override
+	public void removeToken(String token) {
+		
 		Session session = em.unwrap(Session.class);
 		
+		Query query = session.createQuery("delete from PersistentLogins where token =:token");
 		
-		User user1 = userDao.getUserById(user.getId());
+		query.setParameter("token", token);
 		
-		String sql = "select token from persistent_logins where user_id= ?" ;
-		
-		Query query = session.createSQLQuery(sql);
-		
-		String token = (String) query.getSingleResult();
-		
-		return token;
+		query.executeUpdate();
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.devpull.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 //import org.springframework.web.util.UriComponentsBuilder;
 
+import com.devpull.demo.model.CustomMessage;
 import com.devpull.demo.model.Message;
 import com.devpull.demo.model.User;
 import com.devpull.demo.services.AdminService;
@@ -26,6 +29,7 @@ import com.devpull.demo.services.TokenService;
 //import com.devpull.demo.util.CustomErrorType;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/messages")
 public class MessageController {
 
@@ -86,7 +90,7 @@ public class MessageController {
 	
 
 	@GetMapping("/get_messages_between")
-	public ResponseEntity<List<Message>> getMsgsBetween(@RequestParam String token,
+	public ResponseEntity<List<CustomMessage>> getMsgsBetween(@RequestParam String token,
 														 @RequestParam int receiverId){
 		
 		logger.info("Getting msgs from receiver with id {}", receiverId);
@@ -98,11 +102,33 @@ public class MessageController {
 		
 		List<Message> msgs = msgService.getMessagesBetween(token, receiverId);
 		
+		
+		
+		List<CustomMessage> customMsgs  = new ArrayList<CustomMessage>(); 
+		CustomMessage cm = new CustomMessage(); 
+		
+		for (Message message : msgs) {
+			
+		int id = message.getId();
+		int theReceiverId = message.getReceiverMsg().getId();
+		int senderId = message.getSenderMsg().getId();
+		String text = message.getMsgData();
+		
+		cm.setId(id);
+		cm.setReceiverId(receiverId);
+		cm.setSenderId(senderId);
+		cm.setText(text);
+		
+		customMsgs.add(cm);
+		}
+		logger.info("Custom Msgs Size"+customMsgs.size());
+		
+		
 		if (msgs == null || msgs.isEmpty()) {
-			return new ResponseEntity<List<Message>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<CustomMessage>>(HttpStatus.NO_CONTENT);
 		}
 		
-		return new ResponseEntity<List<Message>>(msgs, HttpStatus.OK);
+		return new ResponseEntity<List<CustomMessage>>(customMsgs, HttpStatus.OK);
 	}
 	
 }

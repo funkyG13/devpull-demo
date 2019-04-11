@@ -21,37 +21,54 @@ import com.devpull.demo.util.CustomErrorType;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/login")
+@RequestMapping("/api")
 public class LoginController {
 
 	public static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@Autowired
 	private TokenService tokenService;
-	
+
 	@Autowired
 	private AdminService adminService;
-	
-	
-	@PostMapping("/check")
-	public ResponseEntity<String> loginUser(@RequestParam String username, 
-											@RequestParam String password){
-		
-		User user = adminService.getUser(username, password);
-		
-		
-		if(user == null) {
-			
-			logger.error("There is no such user");
-			return new ResponseEntity<String>(new CustomErrorType("Unable to find user with this uname"), HttpStatus.NOT_FOUND);
-		}
-		
-		String token = tokenService.createToken(user);
-	
-		logger.info(token);
-		
-		return new ResponseEntity<String>(token,HttpStatus.OK);
 
+	@PostMapping("/login")
+	public ResponseEntity<String> loginUser(@RequestParam String username, @RequestParam String password) {
+
+		User user = adminService.getUser(username, password);
+
+		if (user == null) {
+
+			logger.error("There is no such user");
+			return new ResponseEntity<String>(new CustomErrorType("Unable to find user with this uname"),
+					HttpStatus.NOT_FOUND);
+		}
+
+		String token = tokenService.createToken(user);
+
+		logger.info(token);
+
+		return new ResponseEntity<String>(token, HttpStatus.OK);
+
+	}
+
+	@PostMapping("/logout")
+	public ResponseEntity<Void> logoutUser(@RequestParam String token){
+		
+		User user = tokenService.getUserOfToken(token);
+
+		logger.info("deleting token from user: " + user.toString());
+		
+		if (user == null || token == null) {
+			logger.error("token or user are null");
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			
+		}
+		tokenService.removeToken(token);
+		
+		logger.info("token succesfully removed " );
+		
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 }
