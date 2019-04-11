@@ -44,9 +44,6 @@ public class TokenDaoImpl implements TokenDao {
 	            
 	            Query query = curSession.createSQLQuery("insert into persistent_logins values(default,?,?,?)");
 	            
-//	            Query query = curSession.createSQLQuery("insert into PersistentLogins(id,userId, token)"
-//	            								+ "select default, userId, token from PersistentLogins");
-//	            query.setParameter(0, default );
 	            query.setParameter(1, user.getId());
 	            query.setParameter(2, uuid);
 	            query.setParameter(3, new Date());
@@ -64,7 +61,7 @@ public class TokenDaoImpl implements TokenDao {
 		
 		User user = userDao.getUserById(userId);
 		
-//		useToken(token);
+		useToken(token);
 		
 		return user;
 	}
@@ -80,9 +77,7 @@ public class TokenDaoImpl implements TokenDao {
 		
 		PersistentLogins pl = query.getSingleResult();
 		
-			int userId= pl.getUserId().getId();
-			
-			logger.info("userId: +"+userId);			
+			int userId= pl.getUserId().getId();	
 		
 		return userId;
 	}
@@ -91,14 +86,16 @@ public class TokenDaoImpl implements TokenDao {
 		
 		Session session = em.unwrap(Session.class);
 		
-		String sql = "update persistent_logins set last_access_time = default where token = ?";
+		String hql = "update PersistentLogins set lastAccessTime = :lastAccess where token = :token";
 		
-		Query query = session.createSQLQuery(sql);
+		Query query = session.createQuery(hql);
 		
-		query.setParameter(1, token);
+		query.setParameter("lastAccess", new Date());
+		query.setParameter("token", token);
 		
-		query.executeUpdate();
+		int result = query.executeUpdate();
 		
+		logger.info("rows affected "+result);
 	}
 
 	@Override

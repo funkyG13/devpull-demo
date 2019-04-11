@@ -1,6 +1,7 @@
 package com.devpull.demo.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,6 +43,9 @@ public class Message implements Serializable{
 	
 	@Column(name="text")
 	private String msgData;
+	
+	@Column(name="time")
+	private Date time;
 	
 	public Message() {
 	}
@@ -85,9 +89,18 @@ public class Message implements Serializable{
 		this.msgData = msgData;
 	}
 
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		time = new Date();
+		this.time = time;
+	}
+
 	@Override
 	public String toString() {
-		return "Message [id=" + id + ", receiverMsg=" + receiverMsg + ", senderMsg=" + senderMsg + ", msgData="
+		return "Message [id=" + id + ", receiverMsg=" + receiverMsg.getId() + ", senderMsg=" + senderMsg.getId() + ", msgData="
 				+ msgData + "]";
 	}
 	

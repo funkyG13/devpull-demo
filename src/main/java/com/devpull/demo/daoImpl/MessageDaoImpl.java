@@ -62,54 +62,33 @@ public class MessageDaoImpl implements MessageDao {
 	public List<Message> getMessagesBetween(String token, int receiverId) {
 
 		Session curSession = em.unwrap(Session.class);
-		
-		
+				
 		User receiver = userDao.getUserById(receiverId);
 		
-		logger.info("receive: "+receiver.toString());
+		logger.info("receiver.toString: "+receiver.toString());
 		
 		User sender = tokenDao.getUserOfToken(token);
-		
-		logger.info(sender.toString());
-		
-//		int senderId = sender.getId();
-		
-//		logger.info("SenderId: "+senderId);
 
-		Query<Message> query = curSession.createQuery("from Message where receiverMsg=:receiverId and senderMsg=:senderId"
-														,Message.class);
+		logger.info("sender.toString"+sender.toString());
 		
-		query.setParameter("receiverId", receiver);
-		query.setParameter("senderId", sender);
+		int senderId = sender.getId();
 		
-		List<Message> msgs = query.getResultList();
-		
-		Query<Message> query1 = curSession.createQuery("from Message where receiverMsg=:senderId and senderMsg=:receiverId"
-															,Message.class);
-		
-		query1.setParameter("receiverId", receiver);
-		query1.setParameter("senderId", receiver);
-		
-		List<Message> msgsReverse = query1.getResultList();
-		
-		List<Message> mergedList = new ArrayList<Message>();
-		mergedList.addAll(msgs);
-		mergedList.addAll(msgsReverse);
-		
-		return mergedList;
-		
+		List<Message> msgs = getAllMsgs();
+		List<Message> tempMsg1 = new ArrayList<Message>();
+
+		for (Message message : msgs) {
+			if((message.getReceiverMsg().getId() == receiverId
+					&& message.getSenderMsg().getId()== senderId) 
+					|| (message.getReceiverMsg().getId() == senderId 
+					&& message.getSenderMsg().getId()== receiverId)) {
+				
+				tempMsg1.add(message);
+				logger.info("message added "+message.toString());	
+			}
+		}
+		return tempMsg1;	
 	}
-//		List<Message> msgs = getAllMsgs();
-//		List<Message> tempList = new ArrayList<Message>();
-//		for (Message message : msgs) {
-//			if(receiverId == message.getReceiverMsg().getId()) {
-//				logger.info("Message list from receiver");
-//				tempList.add(message);
-//			}			
-//		}
-//		
-//		return tempList;
-//	}
+
 	
 	@Override
 	public Message sendMsgTo(int senderId, int receiverId, String msgData) {
@@ -128,11 +107,12 @@ public class MessageDaoImpl implements MessageDao {
 		
 		logger.info("msg info : ");
 				
-		Query query = currentSession.createSQLQuery("insert into message values(default,?,?,?)");
+		Query query = currentSession.createSQLQuery("insert into message values(default,?,?,?,?)");
 
 		query.setParameter(1, senderId);
 		query.setParameter(2, receiverId);
 		query.setParameter(3, msgData);
+		query.setParameter(4, new Date());
 		
 		query.executeUpdate();
 		
