@@ -26,4 +26,12 @@ public class TokenServiceImpl implements TokenService {
 		return tokenDao.getUserOfToken(token);
 	}
 
+	@Override
+	@Transactional
+	public String getTokenOfUser(User user) {
+		// TODO Auto-generated method stub
+		return tokenDao.getTokenOfUser(user);
+	}
+	
+
 }

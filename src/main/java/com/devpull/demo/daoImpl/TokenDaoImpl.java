@@ -1,5 +1,6 @@
 package com.devpull.demo.daoImpl;
 
+import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
@@ -45,6 +46,19 @@ public class TokenDaoImpl implements TokenDao {
 
 	@Override
 	public User getUserOfToken(String token) {
+			
+	
+		int userId = getUserIdOfToken(token);
+		
+		User user = userDao.getUserById(userId);
+		
+		useToken(token);
+		
+		return user;
+	}
+
+	
+	private int getUserIdOfToken(String token) {
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -52,9 +66,39 @@ public class TokenDaoImpl implements TokenDao {
 		
 		int userId = query.getFirstResult();
 		
-		User user = session.get(User.class, userId);
-
-		return user;
+		return userId;
+	}
+	
+	public void useToken(String token) {
+		
+		Session session = em.unwrap(Session.class);
+		
+		String sql = "update persistent_logins set last_access_time = default where token = ?";
+		
+		Query query = session.createSQLQuery(sql);
+		
+		query.setParameter(2, token);
+		query.setParameter(3, new Date());
+		
+		query.executeUpdate();
+		
 	}
 
+	@Override
+	public String getTokenOfUser(User user) {
+
+		Session session = em.unwrap(Session.class);
+		
+		
+		User user1 = userDao.getUserById(user.getId());
+		
+		String sql = "select token from persistent_logins where user_id= ?" ;
+		
+		Query query = session.createSQLQuery(sql);
+		
+		String token = (String) query.getSingleResult();
+		
+		return token;
+	}
+	
 }

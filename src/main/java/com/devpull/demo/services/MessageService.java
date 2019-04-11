@@ -13,7 +13,7 @@ public interface MessageService {
 	
 	List<Message> getMessagesFrom(int receiverId);
 	
-	Message sendMsgTo(User sender,User receiver,String msgData);
+	Message sendMsgTo(int senderId,int receiverId,String msgData);
 	
 	List<Message> getAllMsgs();
 	

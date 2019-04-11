@@ -65,6 +65,21 @@ public class UserDaoImpl implements UserDao {
 		
 		session.save(user);
 	}
+	
+	@Override
+	public void saveCompany(User user) {
+
+		Session session = em.unwrap(Session.class);
+		
+		int id = 3;
+		Role role = session.get(Role.class, id);
+		
+		user.setRole(role);
+		
+		session.save(user);
+	}
+	
+	
 
 	@Override
 	public void deleteUserById(int id) {
@@ -155,16 +170,6 @@ public class UserDaoImpl implements UserDao {
 		return null;
 		
 	}
-
-
-//	List<User> users = findAll();
-//	for(User user: users) {
-//		if(user.getUsername().equals(username)
-//				&& user.getPassword().equals(password)) {
-//			return user;
-//		}	
-//	}
-//	return null;
 
 	}
 

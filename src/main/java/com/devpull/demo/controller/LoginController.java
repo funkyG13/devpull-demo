@@ -37,12 +37,7 @@ public class LoginController {
 	public ResponseEntity<String> loginUser(@RequestParam String username, 
 											@RequestParam String password){
 		
-		User user = adminService.getUserByUsername(username);
-		
-		logger.info("to username einai {}", username);
-		
-		
-		user = adminService.getUser(username, password);
+		User user = adminService.getUser(username, password);
 		
 		
 		if(user == null) {

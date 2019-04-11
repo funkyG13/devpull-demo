@@ -23,6 +23,8 @@ public interface UserDao {
 		
 	public User getUser(String username, String password);
 	
+	public void saveCompany(User user);
+	
 //	public int registerUser(User user);
 	
 	

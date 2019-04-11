@@ -19,6 +19,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @PropertySource("classpath:application.properties")
 public class MyConfig {	
 	
+//	@Autowired
+//	private Environment env;
 	
 	@Bean
 	public ViewResolver viewResolver() {

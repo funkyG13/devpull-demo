@@ -22,6 +22,7 @@ import com.devpull.demo.model.User;
 import com.devpull.demo.services.AdminService;
 
 import com.devpull.demo.services.MessageService;
+import com.devpull.demo.services.TokenService;
 //import com.devpull.demo.util.CustomErrorType;
 
 @RestController
@@ -32,6 +33,9 @@ public class MessageController {
 
 	@Autowired
 	private MessageService msgService;
+	
+	@Autowired
+	private TokenService tokenService;
 
 	@Autowired
 	private AdminService adminService;
@@ -51,49 +55,40 @@ public class MessageController {
 
 	}
 
-//	@PostMapping("/send_msg")
-//	public ResponseEntity<Void> sendMsgTo(@RequestBody Message msg, User user){
-//
-//		logger.info("Creating Msg " + msg.getMsgData() + " sender: "+msg.getSender()+ " receiver: "+ msg.getReceiver());
-//
-//		logger.info("receiver: " + user.getReceiver() + " sender: "+user.getSender() );
-//		
-//		 user = adminService.getUserById(user.getId());
-//		 logger.info("user "+ user.toString());
-//		
-//		if (msg.getReceiver() == null) {
-//			logger.error("Unable to create Message.");
-//			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-//		}
-//		msgService.sendMsgTo(msg.getSender(), msg.getReceiver(), msg.getMsgData());
-//		
-//		return new ResponseEntity<Void>(HttpStatus.OK);
-//	}
-	
-	
 	@PostMapping("/send_msg")
-	public ResponseEntity<Message> sendMsgTo(@RequestParam User sender,
-			@RequestParam User receiver, @RequestParam String msgData){
+	public ResponseEntity<Void> sendMsgTo(@RequestParam int senderId ,
+										  @RequestParam int receiverId,
+										  @RequestParam String text){
 
+		logger.info("sender: "+ senderId +"receiver: "+ receiverId + "text: "+ text);
+		
+//		User user = tokenService.getUserOfToken(token);
+		 
+		User sender = adminService.getUserById(senderId);
+		User receiver = adminService.getUserById(receiverId);
+		
+//		logger.info("sender : "+ sender.toString());
+//		logger.info("receiver : "+ receiver.toString());
+		if (!(adminService.userExists(receiver))) {
+			logger.error("Unable to create Message.");
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
+		
+		Message msg = msgService.sendMsgTo(senderId, receiverId, text);
+		
+		logger.info("msg created");
 
-		logger.info("receiver: " + receiver.getReceiver() + " sender: "+sender.getSender() );
+		logger.info("msg created "+ msg.toString());
+	
 		
-		 sender = adminService.getUserById(sender.getId());
-		 logger.info("senderId "+ sender.getId());
-		
-//		if (receiver == null) {
-//			logger.error("Unable to create Message.");
-//			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-//		}
-		Message msg = msgService.sendMsgTo(sender, receiver, msgData);
-		
-		return new ResponseEntity<Message>(msg,HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
+	
 
 	@GetMapping("/get_messages_from/{receiverId}")
 	public ResponseEntity<List<Message>> getMsgsFromUser(@PathVariable int receiverId){
 		
-		logger.info("Getting msgs from {}", receiverId);
+		logger.info("Getting msgs from receiver with id {}", receiverId);
 		List<Message> msgs = msgService.getMessagesFrom(receiverId);
 		
 		if (msgs == null || msgs.isEmpty()) {

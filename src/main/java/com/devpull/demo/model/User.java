@@ -1,6 +1,8 @@
 package com.devpull.demo.model;
 
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,12 +15,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="user")
-public class User {
+public class User implements Serializable {
     
-    @Id
+   
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
@@ -43,12 +50,12 @@ public class User {
     @JoinColumn(name="role_id")
     private Role role;
 
-    @OneToOne(mappedBy="senderMsg", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-            CascadeType.REFRESH })
+    
+    @OneToOne(mappedBy="senderMsg",  cascade=CascadeType.ALL, orphanRemoval = true)
     private Message sender;
     
-    @OneToOne(mappedBy="receiverMsg", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-            CascadeType.REFRESH })
+   
+    @OneToOne(mappedBy="receiverMsg", cascade=CascadeType.ALL, orphanRemoval = true)
     private Message receiver;
     
     public User() {
@@ -66,6 +73,15 @@ public class User {
 		this.email = email;
 		this.username = username;
 
+	}
+
+	
+	
+
+	public User(Message sender, Message receiver) {
+		super();
+		this.sender = sender;
+		this.receiver = receiver;
 	}
 
 
@@ -147,11 +163,12 @@ public class User {
 	}
 
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", username=" + username + ", password=" + password + ", role=" + role + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+//				+ ", username=" + username + ", password=" + password + ", role=" + role + "]";
+//	}
+
 
 
 

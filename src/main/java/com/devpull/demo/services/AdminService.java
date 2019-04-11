@@ -21,6 +21,8 @@ public interface AdminService {
 	 
 	 User getUser(String username, String password);
 	 
+	 void saveCompany(User user);
+	 
 	 List<User> findAllCompanies();
 	
 	 List<User> findAllUsers();

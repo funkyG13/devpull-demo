@@ -9,7 +9,7 @@ public interface MessageDao {
 	
 	public List<Message> getMessagesFrom(int receiverId);
 	
-	public Message sendMsgTo(User sender,User receiver,String msgData);
+	public Message sendMsgTo(int senderId,int receiverId,String msgData);
 	
 	public List<Message> getAllMsgs();
 	

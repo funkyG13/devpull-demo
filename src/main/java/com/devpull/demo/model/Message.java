@@ -1,6 +1,6 @@
 package com.devpull.demo.model;
 
-import java.util.Date;
+import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,22 +10,31 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-public class Message {
+@Table(name="message")
+public class Message implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-            CascadeType.REFRESH })
+	 @JsonIgnore
+	@OneToOne(cascade=CascadeType.ALL,orphanRemoval= true)
 	@JoinColumn(name="receiver_id")
 	private User receiverMsg;
 	
-	@OneToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-            CascadeType.REFRESH })
+	 @JsonIgnore
+	@OneToOne(cascade=CascadeType.ALL, orphanRemoval= true)
 	@JoinColumn(name="sender_id")
 	private User senderMsg;
 	
@@ -34,8 +43,6 @@ public class Message {
 	
 	public Message() {
 	}
-	
-	
 
 	public Message(User receiverMsg, User senderMsg, String msgData) {
 		this.receiverMsg = receiverMsg;
@@ -53,19 +60,19 @@ public class Message {
 		this.id = id;
 	}
 
-	public User getReceiver() {
+	public User getReceiverMsg() {
 		return receiverMsg;
 	}
 
-	public void setReceiver(User receiver) {
+	public void setReceiverMsg(User receiver) {
 		this.receiverMsg = receiver;
 	}
 
-	public User getSender() {
+	public User getSenderMsg() {
 		return senderMsg;
 	}
 
-	public void setSender(User sender) {
+	public void setSenderMsg(User sender) {
 		this.senderMsg = sender;
 	}
 

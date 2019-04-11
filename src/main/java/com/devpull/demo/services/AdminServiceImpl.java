@@ -90,4 +90,12 @@ public class AdminServiceImpl implements AdminService {
 		return userDao.findAllUsers();
 	}
 
+	@Override
+	@Transactional
+	public void saveCompany(User user) {
+		userDao.saveCompany(user);
+	}
+	
+	
+
 }

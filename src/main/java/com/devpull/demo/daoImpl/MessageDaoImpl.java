@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.devpull.demo.dao.MessageDao;
+import com.devpull.demo.dao.TokenDao;
+import com.devpull.demo.dao.UserDao;
 import com.devpull.demo.model.Message;
 import com.devpull.demo.model.User;
 
@@ -25,11 +27,15 @@ public class MessageDaoImpl implements MessageDao {
 	private EntityManager em; 
 
 	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private TokenDao tokenDao;
+	
+	@Autowired
 	public MessageDaoImpl(EntityManager em) {
 		this.em = em;
 	}
-
-
 
 	@Override
 	public List<Message> getAllMsgs() {
@@ -37,8 +43,6 @@ public class MessageDaoImpl implements MessageDao {
 		Session curSession = em.unwrap(Session.class);
 		
 		Query<Message> query = curSession.createQuery("from Message",Message.class);
-		
-		
 		
 		List<Message> msgs = query.getResultList();
 		
@@ -48,41 +52,65 @@ public class MessageDaoImpl implements MessageDao {
 	@Override
 	public List<Message> getMessagesFrom(int receiverId) {
 
-//		Session curSession = em.unwrap(Session.class);
-
-		List<Message> msgs = getAllMsgs();
-		List<Message> tempList = new ArrayList<Message>();
-		for (Message message : msgs) {
-			if(receiverId == message.getReceiver().getId()) {}
-			tempList.add(message);
-		}
+		Session curSession = em.unwrap(Session.class);
 		
-		return tempList;
+//		String sql = "select * from message where receiver_id = ?";
+		
+		User receiver = userDao.getUserById(receiverId);
+		
+		Query<Message> query = curSession.createQuery("from Message where receiverMsg=:receiverId",Message.class);
+		
+		query.setParameter("receiverId", receiver);
+		
+		List<Message> msgs = query.getResultList();
+		
+		return msgs;
 	}
-
-
-
+//		List<Message> msgs = getAllMsgs();
+//		List<Message> tempList = new ArrayList<Message>();
+//		for (Message message : msgs) {
+//			if(receiverId == message.getReceiverMsg().getId()) {
+//				logger.info("Message list from receiver");
+//				tempList.add(message);
+//			}			
+//		}
+//		
+//		return tempList;
+//	}
+	
 	@Override
-	public Message sendMsgTo(User sender, User receiver, String msgData) {
+	public Message sendMsgTo(int senderId, int receiverId, String msgData) {
 
 		Session currentSession = em.unwrap(Session.class);
 		
+		User sender = userDao.getUserById(senderId);
+		
+		User receiver = userDao.getUserById(receiverId);
+		
+		Message msg = new Message();
+		
+		msg.setSenderMsg(sender);
+		msg.setReceiverMsg(receiver);
+		msg.setMsgData(msgData);
+		
+		logger.info("msg info : ");
+				
 		Query query = currentSession.createSQLQuery("insert into message values(default,?,?,?)");
-		
-//		sender = currentSession.get(User.class, id);
-		
-		query.setParameter(1, sender);
-		query.setParameter(2, receiver);
+
+		query.setParameter(1, senderId);
+		query.setParameter(2, receiverId);
 		query.setParameter(3, msgData);
 		
 		query.executeUpdate();
 		
-		Message msg = new Message(sender,receiver,msgData);
+		logger.info("message inserted");
 		
 		logger.info("message info: "+ msg.toString());
 		
 		return msg;
 	}
 
+	
+	
 
 }

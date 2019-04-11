@@ -68,7 +68,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<User> addUser(@RequestBody User user,UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<User> addUser(@RequestBody User user) {
 		
 		logger.info("Adding User "+ user);
 		
@@ -77,13 +77,19 @@ public class UserController {
 			return new ResponseEntity<User>(new CustomErrorType("Unable to create user with username: "+
 												user.getUsername()),HttpStatus.CONFLICT );
 		}
+		
+		if(user.getRole().getRoleName().contentEquals("EMPLOYEE")) {
 		adminService.saveUser(user);
+		}
+		if(user.getRole().getRoleName().contentEquals("COMPANY")) {
+			adminService.saveCompany(user);
+			}
 		
 		logger.info("user "+user.getUsername() );
 		
-		 HttpHeaders headers = new HttpHeaders();
-		    headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
-		    return new ResponseEntity<User>(headers, HttpStatus.CREATED);
+//		 HttpHeaders headers = new HttpHeaders();
+//		    headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
+		    return new ResponseEntity<User>( HttpStatus.CREATED);
 
 	}
 	
