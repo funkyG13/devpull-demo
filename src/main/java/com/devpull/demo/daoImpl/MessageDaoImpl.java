@@ -49,6 +49,8 @@ public class MessageDaoImpl implements MessageDao {
 		return msgs;
 	}
 
+//	public List<Message> getMessagesFrom(String token,int contactId) {
+	
 	@Override
 	public List<Message> getMessagesFrom(int receiverId) {
 

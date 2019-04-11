@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,13 +29,13 @@ public class Message implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	 @JsonIgnore
-	@OneToOne(cascade=CascadeType.ALL,orphanRemoval= true)
+	
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="receiver_id")
 	private User receiverMsg;
 	
-	 @JsonIgnore
-	@OneToOne(cascade=CascadeType.ALL, orphanRemoval= true)
+//	 @JsonIgnore
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="sender_id")
 	private User senderMsg;
 	

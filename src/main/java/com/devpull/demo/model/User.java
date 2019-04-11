@@ -2,16 +2,19 @@ package com.devpull.demo.model;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -50,13 +53,13 @@ public class User implements Serializable {
     @JoinColumn(name="role_id")
     private Role role;
 
+    @JsonIgnore
+    @OneToMany(mappedBy="senderMsg",  cascade=CascadeType.ALL,  fetch=FetchType.EAGER)
+    private List<Message> msgSender;
     
-    @OneToOne(mappedBy="senderMsg",  cascade=CascadeType.ALL, orphanRemoval = true)
-    private Message sender;
-    
-   
-    @OneToOne(mappedBy="receiverMsg", cascade=CascadeType.ALL, orphanRemoval = true)
-    private Message receiver;
+    @JsonIgnore
+    @OneToMany(mappedBy="receiverMsg", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    private  List<Message> msgReceiver;
     
     public User() {
     }
@@ -74,16 +77,6 @@ public class User implements Serializable {
 		this.username = username;
 
 	}
-
-	
-	
-
-	public User(Message sender, Message receiver) {
-		super();
-		this.sender = sender;
-		this.receiver = receiver;
-	}
-
 
 	public String getUsername() {
         return username;
@@ -141,26 +134,29 @@ public class User implements Serializable {
 		this.role = role;
 	}
 
+
+	public List<Message> getMsgSender() {
+		return msgSender;
+	}
+
+
+	public void setMsgSender(List<Message> msgSender) {
+		this.msgSender = msgSender;
+	}
+
+
+	public List<Message> getMsgReceiver() {
+		return msgReceiver;
+	}
+
+
+	public void setMsgReceiver(List<Message> msgReceiver) {
+		this.msgReceiver = msgReceiver;
+	}
+
 	
 
-	public Message getSender() {
-		return sender;
-	}
 
-
-	public void setSender(Message sender) {
-		this.sender = sender;
-	}
-
-
-	public Message getReceiver() {
-		return receiver;
-	}
-
-
-	public void setReceiver(Message receiver) {
-		this.receiver = receiver;
-	}
 
 
 //	@Override
