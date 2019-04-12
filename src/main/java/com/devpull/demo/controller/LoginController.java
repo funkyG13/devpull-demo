@@ -47,8 +47,8 @@ public class LoginController {
 		}
 		
 		String token = tokenService.createToken(user);
-
-		PersistentLogins pl = new PersistentLogins(token); 
+		
+		PersistentLogins pl = new PersistentLogins(user,token); 
 		
 		logger.info(token);
 

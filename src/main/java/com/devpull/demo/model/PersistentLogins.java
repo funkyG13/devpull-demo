@@ -45,6 +45,11 @@ public class PersistentLogins implements Serializable{
 
 	public PersistentLogins(String token) {
 		this.token = token;
+	}	
+
+	public PersistentLogins(User userId, String token) {
+		this.userId = userId;
+		this.token = token;
 	}
 
 	public int getId() {
