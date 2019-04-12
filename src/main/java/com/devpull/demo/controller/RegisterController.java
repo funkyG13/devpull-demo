@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devpull.demo.model.Register;
@@ -28,18 +29,50 @@ public class RegisterController {
 	@Autowired
 	private AdminService adminService;
 	
+//	@PostMapping("/signup")
+//    public ResponseEntity<User> signup(@RequestBody Register register, String roleName) {
+//		
+//		
+//		User user = new User();
+//		
+//		user.setId(register.getId());
+//		user.setFirstName(register.getFirstName());
+//		user.setLastName(register.getLastName());
+//		user.setUsername(register.getUsername());
+//		user.setPassword(register.getPassword());
+//		user.setEmail(register.getEmail());
+//
+////		user.setRole(new Role(register.getRole().getId(), register.getRole().getRoleName()));
+//		
+//		if(roleName.equals("EMPLOYEE")) {
+//		adminService.saveUser(user);
+//		logger.info("user "+user.toString());
+//
+//		}
+//		if(roleName.equals("COMPANY")) {
+//		logger.info("user "+user.toString());
+//		adminService.saveCompany(user);
+//		}
+//    	return new ResponseEntity<User>(user,HttpStatus.CREATED);
+//    }
+	
 	@PostMapping("/signup")
-    public ResponseEntity<User> signup(@RequestBody Register register, String roleName) {
+    public ResponseEntity<User> signup(@RequestParam String firstname, 
+    								   @RequestParam String lastname,
+    								   @RequestParam String username,
+    								   @RequestParam String password,
+    								   @RequestParam String email,
+    								   @RequestParam String roleName ) {
 		
 		
 		User user = new User();
 		
-		user.setId(register.getId());
-		user.setFirstName(register.getFirstName());
-		user.setLastName(register.getLastName());
-		user.setUsername(register.getUsername());
-		user.setPassword(register.getPassword());
-		user.setEmail(register.getEmail());
+//		user.setId(register.getId());
+		user.setFirstName(firstname);
+		user.setLastName(lastname);
+		user.setUsername(username);
+		user.setPassword(password);
+		user.setEmail(email);
 
 //		user.setRole(new Role(register.getRole().getId(), register.getRole().getRoleName()));
 		
