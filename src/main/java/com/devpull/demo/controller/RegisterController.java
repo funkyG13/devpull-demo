@@ -29,7 +29,7 @@ public class RegisterController {
 	private AdminService adminService;
 	
 	@PostMapping("/signup")
-    public ResponseEntity<User> signup(@RequestBody Register register) {
+    public ResponseEntity<User> signup(@RequestBody Register register, int roleId) {
 		
 		
 		User user = new User();
@@ -41,12 +41,17 @@ public class RegisterController {
 		user.setPassword(register.getPassword());
 		user.setEmail(register.getEmail());
 
-		user.setRole(new Role(register.getRole().getId(), register.getRole().getRoleName()));
+//		user.setRole(new Role(register.getRole().getId(), register.getRole().getRoleName()));
 		
+		if(roleId == 2) {
 		adminService.saveUser(user);
-		
 		logger.info("user "+user.toString());
-		
+
+		}
+		if(roleId == 3) {
+		logger.info("user "+user.toString());
+		adminService.saveCompany(user);
+		}
     	return new ResponseEntity<User>(user,HttpStatus.CREATED);
     }
 	

@@ -17,13 +17,13 @@ public class Register {
 	public Register() {
 	}
 
-	public Register(String firstName, String lastName, String email, String username, String password, Role role) {
+	public Register(String firstName, String lastName, String email, String username, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.username = username;
 		this.password = password;
-		this.role = role;
+
 	}
 	
 	public int getId() {
