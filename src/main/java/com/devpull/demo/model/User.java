@@ -3,6 +3,7 @@ package com.devpull.demo.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,7 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -63,6 +65,13 @@ public class User implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy="userId",cascade=CascadeType.ALL)
     private List<PersistentLogins> persistentLogins;
+    
+    
+    @ManyToMany
+    @JoinTable(name="user_lang", 
+	joinColumns= {@JoinColumn(name="user_id")},
+	inverseJoinColumns= {@JoinColumn(name="language_id")})
+    private List<Languages> languages;
     
     public User() {
     }
@@ -157,6 +166,26 @@ public class User implements Serializable {
 		this.msgReceiver = msgReceiver;
 	}
 
+
+
+	public List<PersistentLogins> getPersistentLogins() {
+		return persistentLogins;
+	}
+
+
+	public void setPersistentLogins(List<PersistentLogins> persistentLogins) {
+		this.persistentLogins = persistentLogins;
+	}
+
+
+	public List<Languages> getLanguages() {
+		return languages;
+	}
+
+
+	public void setLanguages(List<Languages> languages) {
+		this.languages = languages;
+	}
 
 
 	@Override

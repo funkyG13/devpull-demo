@@ -1,12 +1,14 @@
 package com.devpull.demo.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devpull.demo.dao.UserDao;
+import com.devpull.demo.model.Languages;
 import com.devpull.demo.model.Role;
 import com.devpull.demo.model.User;
 
@@ -95,6 +97,20 @@ public class AdminServiceImpl implements AdminService {
 	public void saveCompany(User user) {
 		userDao.saveCompany(user);
 	}
+
+	@Override
+	@Transactional
+	public List<Languages> getAllLanguages() {
+		return userDao.getAllLanguages();
+	}
+
+	@Override
+	@Transactional
+	public List<Languages> getUsersLanguage(User user) {
+		return userDao.getUsersLanguage(user);
+	}
+
+
 	
 	
 

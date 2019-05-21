@@ -1,7 +1,11 @@
 package com.devpull.demo.daoImpl;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -13,8 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.devpull.demo.controller.LoginController;
 import com.devpull.demo.dao.UserDao;
+import com.devpull.demo.model.Languages;
 import com.devpull.demo.model.Role;
 import com.devpull.demo.model.User;
 
@@ -170,6 +174,29 @@ public class UserDaoImpl implements UserDao {
 		return null;
 		
 	}
+
+	@Override
+	public List<Languages> getAllLanguages() {
+		
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createQuery("from Languages", Languages.class);
+		
+		List<Languages> languages = query.getResultList();
+		
+		return languages;
+	}
+	
+	@Override
+	public List<Languages> getUsersLanguage(User user){
+			
+		List<Languages> usersLang = user.getLanguages();
+		
+		return usersLang;
+		
+	}
+
+
 
 	}
 

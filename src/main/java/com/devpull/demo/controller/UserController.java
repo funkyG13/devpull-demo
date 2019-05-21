@@ -1,7 +1,7 @@
 package com.devpull.demo.controller;
 
 import java.util.List;
-
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-
+import com.devpull.demo.model.Languages;
 import com.devpull.demo.model.User;
 import com.devpull.demo.services.AdminService;
 import com.devpull.demo.util.CustomErrorType;
@@ -135,7 +135,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/profile/companies")
-	public ResponseEntity<List<User>>  showAllCompanies(){
+	public ResponseEntity<List<User>> showAllCompanies(){
 		
 		List<User> users = adminService.findAllCompanies();
 		
@@ -147,7 +147,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/profile/developers")
-	public ResponseEntity<List<User>>  showAllDevelopers(){
+	public ResponseEntity<List<User>> showAllDevelopers(){
 		
 		
 		List<User> users = adminService.findAllUsers();
@@ -157,6 +157,30 @@ public class UserController {
 		}
 		
 	return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+	}
+	
+	@GetMapping("/profile/developers/languages")
+	public ResponseEntity<List<Languages>> showAllLanguages(){
+		
+		List<Languages> languages = adminService.getAllLanguages();
+		
+		if(languages.isEmpty())
+			return new ResponseEntity<>(null, HttpStatus.OK);
+	
+		return new ResponseEntity<List<Languages>>( languages ,HttpStatus.OK);
+	}
+
+	@GetMapping("/profile/developers/{userId}/languages")
+	public ResponseEntity<List<Languages>> showUsersLanguages(@PathVariable("userId") int userId){
+		
+		User user = adminService.getUserById(userId);
+		
+		List<Languages> usersLang = adminService.getUsersLanguage(user);
+		
+		if(usersLang.isEmpty())
+			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+	
+		return new ResponseEntity<List<Languages>>( usersLang ,HttpStatus.OK);
 	}
 	
 }

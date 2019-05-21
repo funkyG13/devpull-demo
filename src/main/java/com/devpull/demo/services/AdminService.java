@@ -1,7 +1,9 @@
 package com.devpull.demo.services;
 
 import java.util.List;
+import java.util.Map;
 
+import com.devpull.demo.model.Languages;
 import com.devpull.demo.model.Role;
 import com.devpull.demo.model.User;
 
@@ -26,6 +28,10 @@ public interface AdminService {
 	 List<User> findAllCompanies();
 	
 	 List<User> findAllUsers();
+	 
+	 List<Languages> getAllLanguages();
+	 
+	 List<Languages> getUsersLanguage(User user);
 	 
 	 //int registerUser(User user);
 }

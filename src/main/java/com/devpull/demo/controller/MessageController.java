@@ -78,7 +78,6 @@ public class MessageController {
 		
 		Message msg = msgService.sendMsgTo(senderId, receiverId, text);
 		
-		logger.info("msg created");
 
 		logger.info("msg created "+ msg.toString());
 	

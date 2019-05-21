@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: devpull-demo
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: mtsir
+Built-By: Mike
 Implementation-Vendor-Id: com.devpull
-Build-Jdk: 1.8.0_191
+Build-Jdk: 1.8.0_171
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/devpull-demo
 Created-By: Maven Integration for Eclipse
