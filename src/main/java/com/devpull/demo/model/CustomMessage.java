@@ -6,15 +6,26 @@ public class CustomMessage {
 
 	private int receiverId;
 
+	private String receiverUsername;
+	
 	private int senderId;
 
+	private String senderUsername;
+	
 	private String text;
+	
+	
 	
 	public CustomMessage() {
 		
 	}
 
-	
+	public CustomMessage(String receiverUsername, String senderUsername, String text) {
+		this.receiverUsername = receiverUsername;
+		this.senderUsername = senderUsername;
+		this.text = text;
+	}
+
 	public CustomMessage(int id, int receiverId, int senderId, String text) {
 		this.id = id;
 		this.receiverId = receiverId;

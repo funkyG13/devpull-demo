@@ -31,12 +31,12 @@ public class Message implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	
+//	@JsonIgnore
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="receiver_id", referencedColumnName="id")
 	private User receiverMsg;
 	
-//	 @JsonIgnore
+//	@JsonIgnore
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="sender_id", referencedColumnName="id")
 	private User senderMsg;

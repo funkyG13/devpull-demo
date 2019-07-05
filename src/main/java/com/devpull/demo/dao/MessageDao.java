@@ -2,6 +2,7 @@ package com.devpull.demo.dao;
 
 import java.util.List;
 
+import com.devpull.demo.model.CustomMessage;
 import com.devpull.demo.model.Message;
 import com.devpull.demo.model.User;
 

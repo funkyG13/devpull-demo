@@ -190,7 +190,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<Languages> getUsersLanguage(User user){
 			
-		List<Languages> usersLang = user.getLanguages();
+		List<Languages> usersLang = user.getLanguageList();
 		
 		return usersLang;
 		

@@ -71,7 +71,7 @@ public class User implements Serializable {
     @JoinTable(name="user_lang", 
 	joinColumns= {@JoinColumn(name="user_id")},
 	inverseJoinColumns= {@JoinColumn(name="language_id")})
-    private List<Languages> languages;
+    private List<Languages> languageList;
     
     public User() {
     }
@@ -177,14 +177,13 @@ public class User implements Serializable {
 		this.persistentLogins = persistentLogins;
 	}
 
-
-	public List<Languages> getLanguages() {
-		return languages;
+	public List<Languages> getLanguageList() {
+		return languageList;
 	}
 
 
-	public void setLanguages(List<Languages> languages) {
-		this.languages = languages;
+	public void setLanguageList(List<Languages> languageList) {
+		this.languageList = languageList;
 	}
 
 
