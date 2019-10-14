@@ -1,5 +1,6 @@
 package com.devpull.demo.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.devpull.demo.model.Languages;
 import com.devpull.demo.model.User;
 import com.devpull.demo.services.AdminService;
+import com.devpull.demo.services.ExcelService;
 import com.devpull.demo.util.CustomErrorType;
 
 @RestController
@@ -33,19 +35,24 @@ public class UserController {
 	private AdminService adminService;
 	
 	@Autowired
+	private ExcelService excelService;
+	
+	@Autowired
 	public UserController(AdminService adminService) {
 		this.adminService = adminService;
 	}
 
 
 	@GetMapping("/users")
-	public ResponseEntity<List<User>>  users(){
+	public ResponseEntity<List<User>>  users() throws IOException{
 		
 		List<User> users = adminService.findAll();
 		
 		if(users.isEmpty()) {
 			return new ResponseEntity<>(users , HttpStatus.NOT_FOUND);
 		}
+		//generate Excel file with all user - info
+		excelService.generateUsersExcel();
 		
 	return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
@@ -84,8 +91,6 @@ public class UserController {
 		
 		logger.info("user "+user.getUsername() );
 		
-//		 HttpHeaders headers = new HttpHeaders();
-//		    headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
 		    return new ResponseEntity<User>( HttpStatus.CREATED);
 
 	}

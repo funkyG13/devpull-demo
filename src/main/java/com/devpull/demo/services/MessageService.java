@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.devpull.demo.model.Message;
 import com.devpull.demo.model.User;
 
-@Service
+//@Service
 public interface MessageService {
 
 	

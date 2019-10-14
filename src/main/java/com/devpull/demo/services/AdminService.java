@@ -10,9 +10,13 @@ import com.devpull.demo.model.User;
 public interface AdminService {
 
 	 List<User> findAll();
+	 
 	 User getUserById(int id);
+	 
 	 void saveUser(User user);
+	 
 	 void update(User user);
+	 
 	 void deleteUserById(int id);
 	 
 	 User getUserByUsername(String username);

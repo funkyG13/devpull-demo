@@ -24,7 +24,7 @@ public class MailServiceImpl implements MailService {
 	public void sendEmail() {
 
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("1@gmail.com", "2@yahoo.com");
+        msg.setTo("m.tsiroglou13@gmail.com", "m.tsiroglou13@yahoo.com");
 
         msg.setSubject("Test Mail");
         msg.setText("Hello Mike \n Spring Boot Email");
@@ -39,7 +39,7 @@ public class MailServiceImpl implements MailService {
 
         // true = multipart message
         MimeMessageHelper helper = new MimeMessageHelper(msg, true);
-        helper.setTo("1@gmail.com");
+        helper.setTo("m.tsiroglou13@gmail.com");
 
         helper.setSubject("Test Mail");
 

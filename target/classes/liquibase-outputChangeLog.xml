@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="AR613LK (generated)" id="1570194032990-1">
+        <createTable tableName="languages">
+            <column name="language_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="language_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-2">
+        <createTable tableName="message">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="sender_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="receiver_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time" type="VARCHAR(45)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-3">
+        <createTable tableName="persistent_logins">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_access_time" type="VARCHAR(45)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-4">
+        <createTable tableName="role">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="role_name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-5">
+        <createTable tableName="user">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="role_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-6">
+        <createTable tableName="user_lang">
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="language_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-7">
+        <addPrimaryKey columnNames="language_id" constraintName="PRIMARY" tableName="languages"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-8">
+        <addPrimaryKey columnNames="user_id, language_id" constraintName="PRIMARY" tableName="user_lang"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-9">
+        <createIndex indexName="fk_lang_idx" tableName="user_lang">
+            <column name="language_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-10">
+        <createIndex indexName="fk_receiver_idx" tableName="message">
+            <column name="receiver_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-11">
+        <createIndex indexName="fk_role_idx" tableName="user">
+            <column name="role_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-12">
+        <createIndex indexName="fk_sender_idx" tableName="message">
+            <column name="sender_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-13">
+        <createIndex indexName="fk_token_user_id_idx" tableName="persistent_logins">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-14">
+        <addForeignKeyConstraint baseColumnNames="language_id" baseTableName="user_lang" constraintName="fk_lang" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="language_id" referencedTableName="languages"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-15">
+        <addForeignKeyConstraint baseColumnNames="receiver_id" baseTableName="message" constraintName="fk_receiver" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-16">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="user" constraintName="fk_role" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="role"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-17">
+        <addForeignKeyConstraint baseColumnNames="sender_id" baseTableName="message" constraintName="fk_sender" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-18">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="persistent_logins" constraintName="fk_token_user_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570194032990-19">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_lang" constraintName="fk_user" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
+    </changeSet>
+</databaseChangeLog>

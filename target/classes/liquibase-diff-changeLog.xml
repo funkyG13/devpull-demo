@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet author="AR613LK (generated)" id="1570197060348-1">
+		<dropForeignKeyConstraint
+			baseTableName="user_lang" constraintName="fk_lang" />
+	</changeSet>
+	<changeSet author="AR613LK (generated)" id="1570197060348-2">
+		<dropForeignKeyConstraint
+			baseTableName="message" constraintName="fk_receiver" />
+	</changeSet>
+	<changeSet author="AR613LK (generated)" id="1570197060348-3">
+		<dropForeignKeyConstraint
+			baseTableName="user" constraintName="fk_role" />
+	</changeSet>
+	<changeSet author="AR613LK (generated)" id="1570197060348-4">
+		<dropForeignKeyConstraint
+			baseTableName="message" constraintName="fk_sender" />
+	</changeSet>
+	<changeSet author="AR613LK (generated)" id="1570197060348-5">
+		<dropForeignKeyConstraint
+			baseTableName="persistent_logins" constraintName="fk_token_user_id" />
+	</changeSet>
+	<changeSet author="AR613LK (generated)" id="1570197060348-6">
+		<dropForeignKeyConstraint
+			baseTableName="user_lang" constraintName="fk_user" />
+	</changeSet>
+	<changeSet author="AR613LK (generated)" id="1570197060348-7">
+		<dropTable tableName="languages" />
+	</changeSet>
+	<changeSet author="AR613LK (generated)" id="1570197060348-8">
+		<dropTable tableName="message" />
+	</changeSet>
+	<changeSet author="AR613LK (generated)" id="1570197060348-9">
+		<dropTable tableName="persistent_logins" />
+	</changeSet>
+	<changeSet author="AR613LK (generated)" id="1570197060348-10">
+		<dropTable tableName="role" />
+	</changeSet>
+	<changeSet author="AR613LK (generated)" id="1570197060348-11">
+		<dropTable tableName="user" />
+	</changeSet>
+	<changeSet author="AR613LK (generated)" id="1570197060348-12">
+		<dropTable tableName="user_lang" />
+	</changeSet>
+    <changeSet author="AR613LK (generated)" id="1570197583041-1">
+        <dropForeignKeyConstraint baseTableName="user_lang" constraintName="fk_lang"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570197583041-2">
+        <dropForeignKeyConstraint baseTableName="message" constraintName="fk_receiver"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570197583041-3">
+        <dropForeignKeyConstraint baseTableName="user" constraintName="fk_role"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570197583041-4">
+        <dropForeignKeyConstraint baseTableName="message" constraintName="fk_sender"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570197583041-5">
+        <dropForeignKeyConstraint baseTableName="persistent_logins" constraintName="fk_token_user_id"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570197583041-6">
+        <dropForeignKeyConstraint baseTableName="user_lang" constraintName="fk_user"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570197583041-7">
+        <dropTable tableName="languages"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570197583041-8">
+        <dropTable tableName="message"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570197583041-9">
+        <dropTable tableName="persistent_logins"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570197583041-10">
+        <dropTable tableName="role"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570197583041-11">
+        <dropTable tableName="user"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570197583041-12">
+        <dropTable tableName="user_lang"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570198290877-1">
+        <dropForeignKeyConstraint baseTableName="user_lang" constraintName="fk_lang"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570198290877-2">
+        <dropForeignKeyConstraint baseTableName="message" constraintName="fk_receiver"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570198290877-3">
+        <dropForeignKeyConstraint baseTableName="user" constraintName="fk_role"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570198290877-4">
+        <dropForeignKeyConstraint baseTableName="message" constraintName="fk_sender"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570198290877-5">
+        <dropForeignKeyConstraint baseTableName="persistent_logins" constraintName="fk_token_user_id"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570198290877-6">
+        <dropForeignKeyConstraint baseTableName="user_lang" constraintName="fk_user"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570198290877-7">
+        <dropTable tableName="languages"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570198290877-8">
+        <dropTable tableName="message"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570198290877-9">
+        <dropTable tableName="persistent_logins"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570198290877-10">
+        <dropTable tableName="role"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570198290877-11">
+        <dropTable tableName="user"/>
+    </changeSet>
+    <changeSet author="AR613LK (generated)" id="1570198290877-12">
+        <dropTable tableName="user_lang"/>
+    </changeSet>
+</databaseChangeLog>
