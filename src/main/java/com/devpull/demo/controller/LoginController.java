@@ -1,5 +1,7 @@
 package com.devpull.demo.controller;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +33,14 @@ public class LoginController {
 	private AdminService adminService;
 
 	@PostMapping("/login")
-	public ResponseEntity<PersistentLogins> loginUser(@RequestParam String username, @RequestParam String password) {
+	public ResponseEntity<?> loginUser(@RequestParam String username, @RequestParam String password) {
 
 		User user = adminService.getUser(username, password);
 
 		if (user == null) {
 
 			logger.error("There is no such user");
-			return new ResponseEntity<PersistentLogins>(new CustomErrorType("Unable to find user with this uname"),
-					HttpStatus.NOT_FOUND);
+			return new ResponseEntity<CustomErrorType>(new CustomErrorType("User not found ", 400, new Date()), HttpStatus.BAD_REQUEST);
 		}
 		
 		String token = tokenService.createToken(user);

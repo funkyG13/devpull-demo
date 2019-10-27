@@ -47,8 +47,8 @@ public class MyConfig {
 		
 	    DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.url("jdbc:mysql://localhost:3306/devpull");
-        dataSourceBuilder.username("xxxx");
-        dataSourceBuilder.password("xxxx");
+        dataSourceBuilder.username("root");
+        dataSourceBuilder.password("1234");
         return dataSourceBuilder.build();
 
 	}

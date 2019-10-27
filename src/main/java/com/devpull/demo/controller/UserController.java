@@ -1,6 +1,7 @@
 package com.devpull.demo.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -59,27 +60,32 @@ public class UserController {
 	
 	
 	@GetMapping("/users/{userId}")
-	public ResponseEntity<User> selectUser(@PathVariable int userId) {
+	public ResponseEntity<?> selectUser(@PathVariable int userId) {
 		
 		logger.info("Fetching User by id", userId);
 		User user =  adminService.getUserById(userId);
 				
 		if(user == null) {
 			logger.error("User id was not found", userId);
-			return new ResponseEntity<User>(new CustomErrorType("There is no user with id :"+userId), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<CustomErrorType>((new CustomErrorType("There is no user with id :"+userId, 400, new Date())), HttpStatus.BAD_REQUEST);
+			
+
 		}
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<User> addUser(@RequestBody User user) {
+	public ResponseEntity<?> addUser(@RequestBody User user) {
 		
 		logger.info("Adding User "+ user);
 		
 		if (adminService.userExists(user)) {
 			logger.error("Unable to create user with username: {}", user.getUsername());
-			return new ResponseEntity<User>(new CustomErrorType("Unable to create user with username: "+
-												user.getUsername()),HttpStatus.CONFLICT );
+			
+			return new ResponseEntity<CustomErrorType>((new CustomErrorType("Unable to create user with username: "+
+					user.getUsername(), 400, new Date())), HttpStatus.BAD_REQUEST);
+			
+
 		}
 		
 		if(user.getRole().getRoleName().contentEquals("EMPLOYEE")) {
@@ -96,7 +102,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/users/{userId}")
-	public ResponseEntity<User> updateUser(@PathVariable int userId,@RequestBody User user) {
+	public ResponseEntity<?> updateUser(@PathVariable int userId,@RequestBody User user) {
 		
 		logger.info("Updating user with id {}", userId);
 		
@@ -104,31 +110,27 @@ public class UserController {
 		
 		if(currUser == null) {
 			logger.error("User with id {} not found.", userId);
-			return new ResponseEntity<User>(new CustomErrorType("User not found: "+ user.getUsername()),HttpStatus.NOT_FOUND);
-		}
-		
+			return new ResponseEntity<CustomErrorType>((new CustomErrorType("User not found: "+ user.getUsername(), 400, new Date())), HttpStatus.BAD_REQUEST);
+		}		
 		currUser.setId(user.getId());
 		currUser.setFirstName(user.getFirstName());
 		currUser.setLastName(user.getLastName());
 		currUser.setUsername(user.getUsername());
 		currUser.setPassword(user.getPassword());
-		currUser.setEmail(user.getEmail());
-
-		
-		adminService.update(user);
-		
+		currUser.setEmail(user.getEmail());	
+		adminService.update(user);		
 		return new ResponseEntity<User>(currUser, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/users/{userId}")
-	public ResponseEntity<Void> deleteUser(@PathVariable int userId) {
+	public ResponseEntity<?> deleteUser(@PathVariable int userId) {
 		
 	logger.info("Deleting user with id: "+ userId);	
 	User user = adminService.getUserById(userId);
 		
 	if(user == null) {
 		logger.error("User not found.Unable to delete user with id :" +userId);
-		return new ResponseEntity<Void>(new CustomErrorType("User with id"+userId+" not found. "),HttpStatus.NOT_FOUND);
+		return new ResponseEntity<CustomErrorType>(new CustomErrorType("User with id "+userId+" not found. ", 400, new Date()),HttpStatus.NOT_FOUND);
 	}
 	
 	adminService.deleteUserById(userId);
@@ -184,5 +186,8 @@ public class UserController {
 	
 		return new ResponseEntity<List<Languages>>( usersLang ,HttpStatus.OK);
 	}
+	
+
+	
 	
 }

@@ -1,136 +1,55 @@
 package com.devpull.demo.util;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.util.MultiValueMap;
 
-public class CustomErrorType implements MultiValueMap<String, String> {
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-	private String errorMsg;
+public class CustomErrorType {
 
-	public CustomErrorType(String errorMsg) {
-		this.errorMsg = errorMsg;
+	private String errorMessage;
+	private int statusCode;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+	private Date timestamp;
+
+	public CustomErrorType() {
+
 	}
 
-	public String getErrorMsg() {
-		return errorMsg;
+	public CustomErrorType(String errorMessage, int statusCode, Date timestamp) {
+		this.errorMessage = errorMessage;
+		this.statusCode = statusCode;
+		this.timestamp = timestamp;
 	}
 
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 
-	@Override
-	public boolean containsKey(Object arg0) {
-		// TODO Auto-generated method stub
-		return false;
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 
-	@Override
-	public boolean containsValue(Object arg0) {
-		// TODO Auto-generated method stub
-		return false;
+	public int getStatusCode() {
+		return statusCode;
 	}
 
-	@Override
-	public Set<Entry<String, List<String>>> entrySet() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setStatusCode(int statusCode) {
+		this.statusCode = statusCode;
 	}
 
-	@Override
-	public List<String> get(Object arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public Date getTimestamp() {
+		return timestamp;
 	}
 
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Set<String> keySet() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<String> put(String arg0, List<String> arg1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void putAll(Map<? extends String, ? extends List<String>> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<String> remove(Object arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Collection<List<String>> values() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getFirst(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void add(String key, String value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addAll(String key, List<? extends String> values) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addAll(MultiValueMap<String, String> values) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void set(String key, String value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setAll(Map<String, String> values) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Map<String, String> toSingleValueMap() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
 	}
 
 }
