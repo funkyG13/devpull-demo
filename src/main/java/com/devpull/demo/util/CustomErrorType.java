@@ -1,14 +1,7 @@
 package com.devpull.demo.util;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
+
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.springframework.util.MultiValueMap;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class CustomErrorType {

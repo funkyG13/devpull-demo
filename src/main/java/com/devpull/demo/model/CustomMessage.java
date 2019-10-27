@@ -13,9 +13,7 @@ public class CustomMessage {
 	private String senderUsername;
 	
 	private String text;
-	
-	
-	
+		
 	public CustomMessage() {
 		
 	}
@@ -32,7 +30,6 @@ public class CustomMessage {
 		this.senderId = senderId;
 		this.text = text;
 	}
-
 
 	public int getId() {
 		return id;
@@ -64,6 +61,22 @@ public class CustomMessage {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public String getReceiverUsername() {
+		return receiverUsername;
+	}
+
+	public void setReceiverUsername(String receiverUsername) {
+		this.receiverUsername = receiverUsername;
+	}
+
+	public String getSenderUsername() {
+		return senderUsername;
+	}
+
+	public void setSenderUsername(String senderUsername) {
+		this.senderUsername = senderUsername;
 	}
 
 	@Override

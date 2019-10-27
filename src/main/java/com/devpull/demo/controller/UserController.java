@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +63,7 @@ public class UserController {
 	
 	
 	@GetMapping("/users/{userId}")
-	public ResponseEntity<?> selectUser(@PathVariable int userId) {
+	public ResponseEntity<?> selectUser(@PathVariable @Min(1) int userId) {
 		
 		logger.info("Fetching User by id", userId);
 		User user =  adminService.getUserById(userId);
@@ -75,7 +78,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<?> addUser(@RequestBody User user) {
+	public ResponseEntity<?> addUser(@Valid @RequestBody User user) {
 		
 		logger.info("Adding User "+ user);
 		
@@ -102,7 +105,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/users/{userId}")
-	public ResponseEntity<?> updateUser(@PathVariable int userId,@RequestBody User user) {
+	public ResponseEntity<?> updateUser(@PathVariable @Min(1) int userId,@RequestBody User user) {
 		
 		logger.info("Updating user with id {}", userId);
 		
@@ -141,8 +144,7 @@ public class UserController {
 	@GetMapping("/profile/companies")
 	public ResponseEntity<List<User>> showAllCompanies(){
 		
-		List<User> users = adminService.findAllCompanies();
-		
+		List<User> users = adminService.findAllCompanies();		
 		if(users.isEmpty()) {
 			return new ResponseEntity<>(users , HttpStatus.NOT_FOUND);
 		}
@@ -152,10 +154,8 @@ public class UserController {
 	
 	@GetMapping("/profile/developers")
 	public ResponseEntity<List<User>> showAllDevelopers(){
-		
-		
-		List<User> users = adminService.findAllUsers();
-		
+				
+		List<User> users = adminService.findAllUsers();	
 		if(users.isEmpty()) {
 			return new ResponseEntity<>(users , HttpStatus.NOT_FOUND);
 		}
@@ -166,8 +166,7 @@ public class UserController {
 	@GetMapping("/profile/developers/languages")
 	public ResponseEntity<List<Languages>> showAllLanguages(){
 		
-		List<Languages> languages = adminService.getAllLanguages();
-		
+		List<Languages> languages = adminService.getAllLanguages();	
 		if(languages.isEmpty())
 			return new ResponseEntity<>(null, HttpStatus.OK);
 	
@@ -175,7 +174,7 @@ public class UserController {
 	}
 
 	@GetMapping("/profile/developers/{userId}/languages")
-	public ResponseEntity<List<Languages>> showUsersLanguages(@PathVariable("userId") int userId){
+	public ResponseEntity<List<Languages>> showUsersLanguages(@PathVariable @Min(1) int userId){
 		
 		User user = adminService.getUserById(userId);
 		

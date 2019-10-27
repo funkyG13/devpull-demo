@@ -3,12 +3,9 @@ package com.devpull.demo.model;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,18 +33,23 @@ public class User implements Serializable {
     private int id;
     
     @Column(name="first_name")
+    @NotEmpty
     private String firstName;
     
     @Column(name="last_name")
+    @NotEmpty
     private String lastName;
     
     @Column(name="email")
+    @NotEmpty
     private String email;
     
     @Column(name="username")
+    @NotEmpty
     private String username;
     
     @Column(name="password")
+    @NotEmpty
     private String password;
     
     @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,

@@ -4,19 +4,12 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.hibernate.cfg.Environment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
 
 
 @Configuration
@@ -45,7 +38,8 @@ public class MyConfig {
 	@Bean
 	public DataSource dataSource() {
 		
-	    DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+	    @SuppressWarnings("rawtypes")
+		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.url("jdbc:mysql://localhost:3306/devpull");
         dataSourceBuilder.username("root");
         dataSourceBuilder.password("1234");

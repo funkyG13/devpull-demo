@@ -1,12 +1,9 @@
 package com.devpull.demo.services;
 
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.devpull.demo.dao.UserDao;
 import com.devpull.demo.model.Languages;
 import com.devpull.demo.model.Role;
@@ -15,9 +12,8 @@ import com.devpull.demo.model.User;
 @Service
 public class AdminServiceImpl implements AdminService {
 
-	
 	private UserDao userDao;
-	
+
 	@Autowired
 	public AdminServiceImpl(UserDao userDao) {
 		this.userDao = userDao;
@@ -35,7 +31,6 @@ public class AdminServiceImpl implements AdminService {
 		return userDao.getUserById(id);
 	}
 
-
 	@Override
 	@Transactional
 	public void saveUser(User user) {
@@ -51,7 +46,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	@Transactional
 	public boolean userExists(User user) {
-		
+
 		return userDao.userExists(user);
 	}
 
@@ -72,7 +67,6 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	@Transactional
@@ -109,9 +103,5 @@ public class AdminServiceImpl implements AdminService {
 	public List<Languages> getUsersLanguage(User user) {
 		return userDao.getUsersLanguage(user);
 	}
-
-
-	
-	
 
 }

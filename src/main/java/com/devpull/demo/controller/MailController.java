@@ -65,5 +65,4 @@ public class MailController {
 		return new ResponseEntity<String>("Mail was sent", HttpStatus.OK);
 	}
 
-
 }
