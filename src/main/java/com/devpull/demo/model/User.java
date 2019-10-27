@@ -15,13 +15,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-@Table(name="user")
+@Table(name="user", uniqueConstraints=@UniqueConstraint(columnNames={"username"}))
 public class User implements Serializable {
     
    
@@ -33,23 +35,24 @@ public class User implements Serializable {
     private int id;
     
     @Column(name="first_name")
-    @NotEmpty
+    @NotEmpty(message="Please provide your first name!")
     private String firstName;
     
     @Column(name="last_name")
-    @NotEmpty
+    @NotEmpty(message="Please provide your last name!")
     private String lastName;
     
     @Column(name="email")
-    @NotEmpty
+    @NotEmpty(message="Please provide your email!")
+    @Pattern(regexp="^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$" , message="Prodive a correct email")
     private String email;
     
     @Column(name="username")
-    @NotEmpty
+    @NotEmpty(message="Please provide a username!")
     private String username;
-    
+
     @Column(name="password")
-    @NotEmpty
+    @NotEmpty(message="Please provide a password!")
     private String password;
     
     @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
@@ -84,14 +87,6 @@ public class User implements Serializable {
 	this.username = username;
 	this.password = password;
 }
-
-	public User(String firstName, String lastName, String email, String username) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.username = username;
-
-	}
 
 	public String getUsername() {
         return username;

@@ -44,7 +44,10 @@ public class UserDaoImpl implements UserDao {
 		User user = session.get(User.class, id);		
 		return user;
 	}
-
+	public void save(User user) {
+		Session session = em.unwrap(Session.class);	
+		session.save(user);
+	}
 	@Override
 	public void saveUser(User user) {
 		Session session = em.unwrap(Session.class);		

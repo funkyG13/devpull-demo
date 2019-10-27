@@ -1,30 +1,44 @@
 package com.devpull.demo.model;
 
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 public class Register {
 
     private int id;
-    
+    @NotEmpty(message="Please provide your first name!")
     private String firstName;
+    @NotEmpty(message="Please provide your last name!")
     private String lastName;
+    @NotEmpty(message="Please provide your email!")
+    @Pattern(regexp="^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$" , message="Prodive a correct email")
     private String email;
-    
+    @NotEmpty(message="Please provide a username!")
     private String username;
+    @NotEmpty(message="Please provide a password!")
     private String password;
-    private Role role;
+    private String roleName;
     
 	public Register() {
 	}
-
-	public Register(String firstName, String lastName, String email, String username, String password) {
+	
+	public Register(int id, @NotEmpty(message = "Please provide your first name!") String firstName,
+			@NotEmpty(message = "Please provide your last name!") String lastName,
+			@NotEmpty(message = "Please provide your email!") @Pattern(regexp = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$", message = "Prodive a correct email") String email,
+			@NotEmpty(message = "Please provide a username!") String username,
+			@NotEmpty(message = "Please provide a password!") String password, String roleName) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.username = username;
 		this.password = password;
-
+		this.roleName = roleName;
 	}
-	
+
+
+
 	public int getId() {
 		return id;
 	}
@@ -62,14 +76,12 @@ public class Register {
 		this.password = password;
 	}
 
-	public Role getRole() {
-		return role;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
-	
-    
-    
+  
 }

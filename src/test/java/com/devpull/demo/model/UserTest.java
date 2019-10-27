@@ -29,8 +29,6 @@ public class UserTest {
 		final List<PersistentLogins> persistentLogins = new ArrayList<>();
 		user.setPersistentLogins(persistentLogins);
 		user.toString();
-		final User user1 = new User("username","password");
-		final User user2 = new User("firstName","lastName","email","userName");
 		assertEquals("users langList: ", langList, user.getLanguageList());
 		assertEquals("users msgs received: ", msgReceived, user.getMsgReceiver());
 		assertEquals("users msgs sent: ", msgSent, user.getMsgSender());
