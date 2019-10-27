@@ -50,8 +50,7 @@ public class UserController {
 	@GetMapping("/users")
 	public ResponseEntity<List<User>>  users() throws IOException{
 		
-		List<User> users = adminService.findAll();
-		
+		List<User> users = adminService.findAll();		
 		if(users.isEmpty()) {
 			return new ResponseEntity<>(users , HttpStatus.NOT_FOUND);
 		}
